@@ -1,0 +1,16 @@
+body {
+  background: #EEEEEE !important;
+}
+
+.nft-header {
+  background: #303E4E;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.text-primary {
+  color: #01B47E !important;
+}
+
+.footer-bg {
+  background:#EEEEEE;
+}
