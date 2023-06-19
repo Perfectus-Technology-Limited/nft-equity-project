@@ -17,3 +17,28 @@ body {
   border-radius: 50%;
   margin-right: 5px;
 }
+
+.nft-square-card {
+  border-radius: 0 !important;
+}
+
+.view-full-property-bg {
+  background-color: #01b47e;
+  border-radius: 0 0 5px 5px;
+  height: 23px;
+  cursor: pointer;
+}
+
+.property-description {
+  font-weight: 400;
+  line-height: 30px;
+}
+
+.property-image {
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+}
+
+.options-section {
+  line-height: 30px;
+}
