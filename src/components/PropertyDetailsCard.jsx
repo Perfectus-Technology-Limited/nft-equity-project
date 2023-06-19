@@ -44,53 +44,53 @@ const PropertyDetailsCard = () => {
       </Row>
 
       <Row className="mt-4 col-10 options-section">
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; 3 Parking/Garage</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Porter/Security</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Air Conditioning</Text>
         </Col>
 
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Washer</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Television</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Balcony/Terrace</Text>
         </Col>
 
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Onsite Maintenance</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Barbeque</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Ventilation</Text>
         </Col>
 
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Outdoor Shower</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Garden</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Rural/Secluded</Text>
         </Col>
 
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Microwave</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Intercom</Text>
         </Col>
-        <Col xxl="4" xl="4" lg="4" md="4" sm="4" xs="4">
+        <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
           <Text className="text-primary">&#x2022; Parking</Text>
         </Col>
       </Row>
