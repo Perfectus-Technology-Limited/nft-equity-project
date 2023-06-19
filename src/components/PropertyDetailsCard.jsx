@@ -6,7 +6,7 @@ const PropertyDetailsCard = () => {
   const { Title, Text } = Typography;
 
   return (
-    <Card className="nft-square-card">
+    <Card className="nft-square-card h-100">
       <Row>
         <Col xxl="7">
           <Title level={5}>

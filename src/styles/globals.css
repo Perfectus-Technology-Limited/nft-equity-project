@@ -42,3 +42,19 @@ body {
 .options-section {
   line-height: 30px;
 }
+
+.gold-text {
+  color: #FFD700;
+}
+
+.silver-text {
+  color: #C0C0C0;
+}
+
+.bronze-text {
+  color: #CD7F32;
+}
+
+.standard-text {
+  color: #2DC2B1;
+}

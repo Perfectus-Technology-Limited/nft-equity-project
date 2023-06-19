@@ -1,5 +1,6 @@
 import React from 'react'
 import PropertyDetailsCard from '@/components/PropertyDetailsCard';
+import RentalRevenueCal from '@/components/RentalRevenueCal';
 import { Col, Row } from 'reactstrap';
 
 const HomePage = () => {
@@ -12,7 +13,7 @@ const HomePage = () => {
         </Col>
 
         <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12">
-          
+          <RentalRevenueCal />
         </Col>
       </Row>
     </div>
