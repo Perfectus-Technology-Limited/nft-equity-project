@@ -7,6 +7,7 @@ import { Col, Row } from 'reactstrap';
 const HomePage = () => {
   const sampleNftData = [
     {
+      id: 1,
       type: 'standard',
       name: 'Standard',
       image: 'https://i.ibb.co/f03wyMp/NFT-Equity-Group-standard-1.png',
@@ -18,6 +19,7 @@ const HomePage = () => {
       equityShare: '0.85%/NFT'
     },
     {
+      id: 2,
       type: 'bronze',
       name: 'Bronze',
       image: 'https://i.ibb.co/QFtGnMq/NFT-Equity-Group-bronze-1.png',
@@ -29,6 +31,7 @@ const HomePage = () => {
       equityShare: '0.85%/NFT'
     },
     {
+      id: 3,
       type: 'silver',
       name: 'Silver',
       image: 'https://i.ibb.co/p1S6q5f/NFT-Equity-Group-silver-1.png',
@@ -40,6 +43,7 @@ const HomePage = () => {
       equityShare: '1.16%/NFT'
     },
     {
+      id: 4,
       type: 'gold',
       name: 'Gold',
       image: 'https://i.ibb.co/cbh7zpV/NFT-Equity-Group-gold-1.png',
@@ -66,7 +70,7 @@ const HomePage = () => {
 
       <Row className="mt-5">
         {sampleNftData.map((nft) => (
-          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className='mt-3'>
+          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className='mt-3' key={nft.id}>
             <NftCard nftData={nft} />
           </Col>
         ))}
