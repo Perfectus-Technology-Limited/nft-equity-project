@@ -15,3 +15,104 @@ body {
 .footer-bg {
   background: #0F1113;
 }
+
+.nft-dark-card {
+  background: #181C1F;
+}
+
+.standard-nft-card{
+  position: relative;
+  height: 780px;
+  background: #181C1F;
+  border: none !important;
+  border-radius: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; 
+  text-align: center;
+}
+
+.standard-nft-card .main-div{
+  position: absolute;
+  inset: 2px;
+  border-radius: 0 !important;
+  background: #181C1F;
+  z-index: 1;
+}
+
+.bronze-nft-card{
+  position: relative;
+  height: 780px;
+  background: #181C1F;
+  border: none !important;
+  border-radius: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; 
+  text-align: center;
+}
+
+.bronze-nft-card .main-div{
+  position: absolute;
+  inset: 2px;
+  border-radius: 0 !important;
+  background: #181C1F;
+  z-index: 1;
+}
+
+.silver-nft-card{
+  position: relative;
+  height: 780px;
+  background: #181C1F;
+  border: none !important;
+  border-radius: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; 
+  text-align: center;
+}
+
+.silver-nft-card .main-div{
+  position: absolute;
+  inset: 2px;
+  border-radius: 0 !important;
+  background: #181C1F;
+  z-index: 1;
+}
+
+.gold-nft-card{
+  position: relative;
+  height: 780px;
+  background: #181C1F;
+  border: none !important;
+  border-radius: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; 
+  text-align: center;
+}
+
+.gold-nft-card .main-div{
+  position: absolute;
+  inset: 2px;
+  border-radius: 0 !important;
+  background: #181C1F;
+  z-index: 1;
+}
+
+.count-container {
+  background: #22282C;
+  border-radius: 72.5713px;
+}
+
+.count-button {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.03);
+  border: none !important;
+}

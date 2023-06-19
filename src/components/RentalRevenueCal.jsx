@@ -26,7 +26,7 @@ const RentalRevenueCal = () => {
   };
 
   return (
-    <Card className="nft-square-card h-100">
+    <Card className="nft-square-card nft-dark-card h-100">
       <Title level={5} className="text-uppercase">
         <span className="text-primary">Rental Revenue</span>
         <span>{` `}Calculator</span>

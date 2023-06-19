@@ -58,3 +58,130 @@ body {
 .standard-text {
   color: #2DC2B1;
 }
+
+
+.standard-nft-card::after{
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(transparent,
+  transparent,transparent,#2DC2B1);
+  animation: animate 5s linear infinite;
+  animation-delay: -2s;
+}
+
+.standard-nft-card::before{
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(transparent,
+  transparent,transparent,#2DC2B1);
+  animation: animate 5s linear infinite;
+}
+
+.bronze-nft-card::after{
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(transparent,
+  transparent,transparent,#CD7F32);
+  animation: animate 5s linear infinite;
+  animation-delay: -2s;
+}
+
+.bronze-nft-card::before{
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(transparent,
+  transparent,transparent,#CD7F32);
+  animation: animate 5s linear infinite;
+}
+
+.silver-nft-card::after{
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(transparent,
+  transparent,transparent,#C0C0C0);
+  animation: animate 5s linear infinite;
+  animation-delay: -2s;
+}
+
+.silver-nft-card::before{
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(transparent,
+  transparent,transparent,#C0C0C0);
+  animation: animate 5s linear infinite;
+}
+
+.gold-nft-card::after{
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(transparent,
+  transparent,transparent,#FFD700);
+  animation: animate 5s linear infinite;
+  animation-delay: -2s;
+}
+
+.gold-nft-card::before{
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(transparent,
+  transparent,transparent,#FFD700);
+  animation: animate 5s linear infinite;
+}
+
+@keyframes animate{
+  0%{
+      transform: rotate(0deg);
+  }
+
+  100%{
+      transform: rotate(360deg);
+  }
+}
+
+.standard-nft-bg {
+  filter: drop-shadow(0 0px 50px #2DC2B1);
+}
+
+.bronze-nft-bg {
+  filter: drop-shadow(0 0px 50px #CD7F32);
+}
+
+.silver-nft-bg {
+  filter: drop-shadow(0 0px 50px #C0C0C0);
+}
+
+.gold-nft-bg {
+  filter: drop-shadow(0 0px 50px #FFD700);
+}
+
+.standard-nft-btn {
+  background: #2DC2B1;
+}
+
+.bronze-nft-btn {
+  background: #CD7F32;
+}
+
+.silver-nft-btn {
+  background: #C0C0C0;
+}
+
+.gold-nft-btn {
+  background: #FFD700;
+}
