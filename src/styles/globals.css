@@ -69,6 +69,7 @@ body {
   transparent,transparent,#2DC2B1);
   animation: animate 5s linear infinite;
   animation-delay: -2s;
+  z-index: 0;
 }
 
 .standard-nft-card::before{
@@ -79,6 +80,7 @@ body {
   background-image: conic-gradient(transparent,
   transparent,transparent,#2DC2B1);
   animation: animate 5s linear infinite;
+  z-index: 0;
 }
 
 .bronze-nft-card::after{
@@ -90,6 +92,7 @@ body {
   transparent,transparent,#CD7F32);
   animation: animate 5s linear infinite;
   animation-delay: -2s;
+  z-index: 0;
 }
 
 .bronze-nft-card::before{
@@ -100,6 +103,7 @@ body {
   background-image: conic-gradient(transparent,
   transparent,transparent,#CD7F32);
   animation: animate 5s linear infinite;
+  z-index: 0;
 }
 
 .silver-nft-card::after{
@@ -111,6 +115,7 @@ body {
   transparent,transparent,#C0C0C0);
   animation: animate 5s linear infinite;
   animation-delay: -2s;
+  z-index: 0;
 }
 
 .silver-nft-card::before{
@@ -121,6 +126,7 @@ body {
   background-image: conic-gradient(transparent,
   transparent,transparent,#C0C0C0);
   animation: animate 5s linear infinite;
+  z-index: 0;
 }
 
 .gold-nft-card::after{
@@ -132,6 +138,7 @@ body {
   transparent,transparent,#FFD700);
   animation: animate 5s linear infinite;
   animation-delay: -2s;
+  z-index: 0;
 }
 
 .gold-nft-card::before{
@@ -142,6 +149,7 @@ body {
   background-image: conic-gradient(transparent,
   transparent,transparent,#FFD700);
   animation: animate 5s linear infinite;
+  z-index: 0;
 }
 
 @keyframes animate{

@@ -16,8 +16,8 @@ const NftCard = ({ nftData }) => {
   }
 
   return (
-    <Card className={`${nftData?.type}-nft-card`}>
-      <div className="main-div p-3">
+    <div className={`${nftData?.type}-nft-card`}>
+      <div className="main-div p-3" style={{margin: '2px'}}>
         <Title level={5}>
           <span className={`${nftData?.type}-text text-uppercase`}>
             {nftData.name}
@@ -83,7 +83,7 @@ const NftCard = ({ nftData }) => {
           <Button disabled>MINT NOW</Button>
         </div>
       </div>
-    </Card>
+    </div>
   );
 };
 
