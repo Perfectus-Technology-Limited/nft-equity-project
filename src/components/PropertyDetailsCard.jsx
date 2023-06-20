@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Typography } from 'antd';
 import { Row, Col } from 'reactstrap';
-import SampleProperty from '../assets/sample_property.png'
+import TampahHillsBanner from '../assets/TampahHills/tampah-hills-banner.jpg'
 import Image from 'next/image';
 
 const PropertyDetailsCard = () => {
@@ -35,7 +35,7 @@ const PropertyDetailsCard = () => {
 
         <Col>
           <Image
-            src={SampleProperty}
+            src={TampahHillsBanner}
             className="property-image"
             alt="property"
           />
