@@ -42,9 +42,9 @@ const ViewFullProperty = () => {
       footer={false}
       width={'100vh'}
     >
-      <Carousel dynamicHeight={true} autoPlay={true} showThumbs={true}>
+      <Carousel dynamicHeight={true} autoPlay={true} showThumbs={true} infiniteLoop={true}>
         {importedImages.map((image, index) => (
-          <div>
+          <div key={index}>
             <Image key={index} src={image} alt={`Image ${index + 1}`} className="property-image" />
           </div>
         ))}
