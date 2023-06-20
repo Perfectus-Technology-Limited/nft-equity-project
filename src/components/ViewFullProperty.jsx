@@ -44,7 +44,7 @@ const ViewFullProperty = () => {
     >
       <Carousel dynamicHeight={true} autoPlay={true} showThumbs={true}>
         {importedImages.map((image, index) => (
-          <div>
+          <div key={index}>
             <Image key={index} src={image} alt={`Image ${index + 1}`} className="property-image" />
           </div>
         ))}
