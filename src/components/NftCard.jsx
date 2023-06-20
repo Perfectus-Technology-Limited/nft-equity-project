@@ -1,4 +1,5 @@
 import { Button, Card, Typography } from 'antd';
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 const NftCard = ({ nftData }) => {
@@ -16,8 +17,8 @@ const NftCard = ({ nftData }) => {
   }
 
   return (
-    <Card className={`${nftData?.type}-nft-card`}>
-      <div className="main-div p-3">
+    <div className={`${nftData?.type}-nft-card`}>
+      <div className="main-div p-3" style={{margin: '2px'}}>
         <Title level={5}>
           <span className={`${nftData?.type}-text text-uppercase`}>
             {nftData.name}
@@ -25,7 +26,7 @@ const NftCard = ({ nftData }) => {
           <span>{` `}NFT</span>
         </Title>
 
-        <img
+        <Image
           src={nftData?.image}
           alt="nft-img"
           className={`${nftData?.type}-nft-bg col-11 mt-4 mb-4`}
@@ -83,7 +84,7 @@ const NftCard = ({ nftData }) => {
           <Button disabled>MINT NOW</Button>
         </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

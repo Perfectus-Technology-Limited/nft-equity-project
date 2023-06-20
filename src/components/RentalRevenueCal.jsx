@@ -34,7 +34,7 @@ const RentalRevenueCal = () => {
 
       <div className="mt-4">
         <Select
-          defaultValue="Tampah Hills"
+          defaultValue="Batu Bolong 2 Bed Townhouse"
           style={{
             width: '100%',
           }}
@@ -42,8 +42,8 @@ const RentalRevenueCal = () => {
           onChange={handleChange}
           options={[
             {
-              value: 'Tampah Hills',
-              label: <Text>Tampah Hills</Text>,
+              value: 'Batu Bolong 2 Bed Townhouse',
+              label: <Text>Batu Bolong 2 Bed Townhouse</Text>,
             },
           ]}
         />
