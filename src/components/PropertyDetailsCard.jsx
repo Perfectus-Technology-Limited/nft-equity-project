@@ -17,24 +17,26 @@ const PropertyDetailsCard = () => {
         <Row>
           <Col xxl="7">
             <Title level={5}>
-              <span className="text-primary">BERAWA PROPERTY</span>
+              <span className="text-primary">BATU BOLONG 2 BED TOWNHOUSE</span>
               <span>{` `}DETAILS</span>
             </Title>
 
             <div className="mt-3">
               <Text type="secondary" className="property-description">
-                In the heart of the bustling and exploding Canggu of Bali,
-                Indonesia. Property prices are set to explode over the next
-                decade so why not take advantage today and own a piece of the
-                island of paradise and earn some passive income along the way.
+                This fully furnished two bedroom two level townhouse with your
+                own private pool is nestled in the beautiful and popular area of
+                Canggu. This is a prime opportunity to own your own piece of
+                paradise on the island of the gods in Bali.
               </Text>
             </div>
 
             <Row className="mt-4">
-              <Text className="options-section">&#x2022; 3 Bedroom Villa</Text>
-              <Text className="options-section">&#x2022; 220m2 Villa</Text>
-              <Text className="options-section">&#x2022; 190m2 Plot</Text>
-              <Text className="options-section">&#x2022; Leasehold</Text>
+              <Text className="options-section">&#x2022; Rent Ready</Text>
+              <Text className="options-section">&#x2022; 127SqMt</Text>
+              <Text className="options-section">&#x2022; Lease Hold</Text>
+              <Text className="options-section">&#x2022; 2 Bedrooms</Text>
+              <Text className="options-section">&#x2022; 2 Bathrooms</Text>
+              <Text className="options-section">&#x2022; Private Pool</Text>
             </Row>
           </Col>
 
@@ -53,55 +55,55 @@ const PropertyDetailsCard = () => {
           </Col>
         </Row>
 
-        <Row className="mt-4 col-10 options-section">
+        <Row className="mt-4 options-section">
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; 3 Parking/Garage</Text>
+            <Text className="text-primary">&#x2022; Ventilation</Text>
           </Col>
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Porter/Security</Text>
+            <Text className="text-primary">&#x2022; Premium Quality Materials</Text>
           </Col>
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Air Conditioning</Text>
+            <Text className="text-primary">&#x2022; 2 minute walk to Berawa Beach</Text>
           </Col>
 
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Washer</Text>
+            <Text className="text-primary">&#x2022; Close top Restaurants</Text>
+          </Col>
+          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
+            <Text className="text-primary">&#x2022; Guest Concierge</Text>
           </Col>
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
             <Text className="text-primary">&#x2022; Television</Text>
           </Col>
-          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Balcony/Terrace</Text>
-          </Col>
 
-          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Onsite Maintenance</Text>
-          </Col>
-          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Barbeque</Text>
-          </Col>
-          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Ventilation</Text>
-          </Col>
-
-          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Outdoor Shower</Text>
-          </Col>
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
             <Text className="text-primary">&#x2022; Garden</Text>
           </Col>
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Rural/Secluded</Text>
+            <Text className="text-primary">&#x2022; Parking/Garage</Text>
+          </Col>
+          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
+            <Text className="text-primary">&#x2022; Balcony / Terrace</Text>
           </Col>
 
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Microwave</Text>
+            <Text className="text-primary">&#x2022; Gated Community</Text>
           </Col>
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Intercom</Text>
+            <Text className="text-primary">&#x2022; Security</Text>
           </Col>
           <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
-            <Text className="text-primary">&#x2022; Parking</Text>
+            <Text className="text-primary">&#x2022; Onsite Maintenance</Text>
+          </Col>
+
+          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
+            <Text className="text-primary">&#x2022; Microwave / Oven</Text>
+          </Col>
+          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
+            <Text className="text-primary">&#x2022; Air Conditioning</Text>
+          </Col>
+          <Col xxl="4" xl="4" lg="4" md="6" sm="6" xs="12">
+            <Text className="text-primary">&#x2022; Private Pool</Text>
           </Col>
         </Row>
       </Card>

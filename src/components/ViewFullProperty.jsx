@@ -6,27 +6,6 @@ import Image from 'next/image';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 
-const getConfigurableProps = () => ({
-  showArrows: boolean('showArrows', true, tooglesGroupId),
-  showStatus: boolean('showStatus', true, tooglesGroupId),
-  showIndicators: boolean('showIndicators', true, tooglesGroupId),
-  infiniteLoop: boolean('infiniteLoop', true, tooglesGroupId),
-  showThumbs: boolean('showThumbs', true, tooglesGroupId),
-  useKeyboardArrows: boolean('useKeyboardArrows', true, tooglesGroupId),
-  autoPlay: boolean('autoPlay', true, tooglesGroupId),
-  stopOnHover: boolean('stopOnHover', true, tooglesGroupId),
-  swipeable: boolean('swipeable', true, tooglesGroupId),
-  dynamicHeight: boolean('dynamicHeight', true, tooglesGroupId),
-  emulateTouch: boolean('emulateTouch', true, tooglesGroupId),
-  autoFocus: boolean('autoFocus', false, tooglesGroupId),
-  thumbWidth: number('thumbWidth', 100, {}, valuesGroupId),
-  selectedItem: number('selectedItem', 0, {}, valuesGroupId),
-  interval: number('interval', 2000, {}, valuesGroupId),
-  transitionTime: number('transitionTime', 500, {}, valuesGroupId),
-  swipeScrollTolerance: number('swipeScrollTolerance', 5, {}, valuesGroupId),
-  ariaLabel: text('ariaLabel', undefined),
-});
-
 
 const ViewFullProperty = () => {
   const dispatch = useDispatch();
@@ -61,7 +40,7 @@ const ViewFullProperty = () => {
       onOk={() => dispatch(closeModal())}
       onCancel={() => dispatch(closeModal())}
       footer={false}
-      width={'100vw'}
+      width={'100vh'}
     >
       <Carousel dynamicHeight={true} autoPlay={true} showThumbs={true}>
         {importedImages.map((image, index) => (
