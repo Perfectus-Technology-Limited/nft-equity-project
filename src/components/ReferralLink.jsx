@@ -1,19 +1,29 @@
-import { Card, Typography, Space, Input, Button, Tooltip } from 'antd';
-import React, { useState } from 'react';
+import { Card, Typography, Space, Input, Button, Tooltip, Alert } from 'antd';
+import React, { useState, useEffect } from 'react';
 import { CopyFilled, CheckOutlined } from '@ant-design/icons';
+import { useAccount } from 'wagmi';
 
 const ReferralLink = () => {
   const { Title, Text } = Typography;
   const [isRefLinkCopied, setIsRefLinkCopied] = useState(false);
-  const [refLink, setRefLink] = useState('https://nftequity.group/?ref=0xC634567890abcdef9AC0d715BD91b3083C71193f')
+  const [refLink, setRefLink] = useState(null);
+  const { address } = useAccount();
 
   const handleCopy = () => {
     setIsRefLinkCopied(true);
-    navigator.clipboard.writeText(refLink)
+    navigator.clipboard.writeText(refLink);
     setTimeout(() => {
       setIsRefLinkCopied(false);
     }, 2000);
   };
+
+  useEffect(() => {
+    if (address) {
+      setRefLink(process.env.NEXT_PUBLIC_REFERRAL_LINK_BASE_URL + address);
+    } else {
+      setRefLink(null);
+    }
+  }, [address]);
 
   return (
     <Card className="nft-square-card nft-dark-card">
@@ -30,34 +40,41 @@ const ReferralLink = () => {
         </div>
 
         <div className="col-lg-10 mx-auto mt-2">
-          <Space.Compact
-            style={{
-              width: '100%',
-            }}
-          >
-            <Input
-              value={refLink}
-              className="text-center"
-            />
+          {address ? (
+            <Space.Compact
+              style={{
+                width: '100%',
+              }}
+            >
+              <Input value={refLink} className="text-center" />
 
-            {!isRefLinkCopied ? (
-              <Tooltip title="Copy">
-                <Button type="primary" onClick={handleCopy}>
-                  <div style={{ marginTop: '0px' }}>
-                    <CopyFilled />
-                  </div>
-                </Button>
-              </Tooltip>
-            ) : (
-              <Tooltip title="Copied">
-                <Button type="primary">
-                  <div style={{ marginTop: '0px' }}>
-                    <CheckOutlined />
-                  </div>
-                </Button>
-              </Tooltip>
-            )}
-          </Space.Compact>
+              {!isRefLinkCopied ? (
+                <Tooltip title="Copy">
+                  <Button type="primary" onClick={handleCopy}>
+                    <div style={{ marginTop: '0px' }}>
+                      <CopyFilled />
+                    </div>
+                  </Button>
+                </Tooltip>
+              ) : (
+                <Tooltip title="Copied">
+                  <Button type="primary">
+                    <div style={{ marginTop: '0px' }}>
+                      <CheckOutlined />
+                    </div>
+                  </Button>
+                </Tooltip>
+              )}
+            </Space.Compact>
+          ) : (
+            <Alert
+              message={
+                <Text className='text-uppercase small' type="warning">Please connect your wallet to generate referral link</Text>
+              }
+              type="warning"
+              showIcon
+            />
+          )}
         </div>
       </div>
     </Card>
