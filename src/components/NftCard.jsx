@@ -1,4 +1,5 @@
 import { Button, Card, Typography } from 'antd';
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 const NftCard = ({ nftData }) => {
@@ -25,7 +26,7 @@ const NftCard = ({ nftData }) => {
           <span>{` `}NFT</span>
         </Title>
 
-        <img
+        <Image
           src={nftData?.image}
           alt="nft-img"
           className={`${nftData?.type}-nft-bg col-11 mt-4 mb-4`}

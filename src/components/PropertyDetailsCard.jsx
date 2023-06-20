@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Typography } from 'antd';
 import { Row, Col } from 'reactstrap';
+import SampleProperty from '../assets/sample_property.png'
+import Image from 'next/image';
 
 const PropertyDetailsCard = () => {
   const { Title, Text } = Typography;
@@ -32,8 +34,8 @@ const PropertyDetailsCard = () => {
         </Col>
 
         <Col>
-          <img
-            src="https://images.pexels.com/photos/280222/pexels-photo-280222.jpeg?cs=srgb&dl=pexels-pixabay-280222.jpg&fm=jpg"
+          <Image
+            src={SampleProperty}
             className="property-image"
             alt="property"
           />

@@ -4,6 +4,10 @@ import RentalRevenueCal from '@/components/RentalRevenueCal';
 import NftCard from '@/components/NftCard';
 import { Col, Row } from 'reactstrap';
 import ReferralLink from '@/components/ReferralLink';
+import StandardNFT from '../assets/NFT/Standard.svg'
+import BronzeNFT from '../assets/NFT/Bronze.svg'
+import SilverNFT from '../assets/NFT/Silver.svg'
+import GoldNFT from '../assets/NFT/Gold.svg'
 
 const HomePage = () => {
   const sampleNftData = [
@@ -11,7 +15,7 @@ const HomePage = () => {
       id: 1,
       type: 'standard',
       name: 'Standard',
-      image: 'https://i.ibb.co/f03wyMp/NFT-Equity-Group-standard-1.png',
+      image: StandardNFT,
       limit: 40,
       total: 12,
       price: 4700,
@@ -23,7 +27,7 @@ const HomePage = () => {
       id: 2,
       type: 'bronze',
       name: 'Bronze',
-      image: 'https://i.ibb.co/QFtGnMq/NFT-Equity-Group-bronze-1.png',
+      image: BronzeNFT,
       limit: 30,
       total: 8,
       price: 6500,
@@ -35,7 +39,7 @@ const HomePage = () => {
       id: 3,
       type: 'silver',
       name: 'Silver',
-      image: 'https://i.ibb.co/p1S6q5f/NFT-Equity-Group-silver-1.png',
+      image: SilverNFT,
       limit: 20,
       total: 5,
       price: 8400,
@@ -47,7 +51,7 @@ const HomePage = () => {
       id: 4,
       type: 'gold',
       name: 'Gold',
-      image: 'https://i.ibb.co/cbh7zpV/NFT-Equity-Group-gold-1.png',
+      image: GoldNFT,
       limit: 10,
       total: 3,
       price: 12500,
