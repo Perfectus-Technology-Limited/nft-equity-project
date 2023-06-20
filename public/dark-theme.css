@@ -22,7 +22,6 @@ body {
 
 .standard-nft-card{
   position: relative;
-  height: 780px;
   background: #181C1F;
   border: none !important;
   border-radius: 0 !important;
@@ -34,16 +33,14 @@ body {
 }
 
 .standard-nft-card .main-div{
-  position: absolute;
-  inset: 2px;
   border-radius: 0 !important;
   background: #181C1F;
   z-index: 1;
+  width: 100%;
 }
 
 .bronze-nft-card{
   position: relative;
-  height: 780px;
   background: #181C1F;
   border: none !important;
   border-radius: 0 !important;
@@ -55,16 +52,14 @@ body {
 }
 
 .bronze-nft-card .main-div{
-  position: absolute;
-  inset: 2px;
   border-radius: 0 !important;
   background: #181C1F;
   z-index: 1;
+  width: 100%;
 }
 
 .silver-nft-card{
   position: relative;
-  height: 780px;
   background: #181C1F;
   border: none !important;
   border-radius: 0 !important;
@@ -76,16 +71,14 @@ body {
 }
 
 .silver-nft-card .main-div{
-  position: absolute;
-  inset: 2px;
   border-radius: 0 !important;
   background: #181C1F;
   z-index: 1;
+  width: 100%;
 }
 
 .gold-nft-card{
   position: relative;
-  height: 780px;
   background: #181C1F;
   border: none !important;
   border-radius: 0 !important;
@@ -97,11 +90,10 @@ body {
 }
 
 .gold-nft-card .main-div{
-  position: absolute;
-  inset: 2px;
   border-radius: 0 !important;
   background: #181C1F;
   z-index: 1;
+  width: 100%;
 }
 
 .count-container {
