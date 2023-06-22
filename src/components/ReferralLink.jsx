@@ -2,6 +2,7 @@ import { Card, Typography, Space, Input, Button, Tooltip, Alert } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { CopyFilled, CheckOutlined } from '@ant-design/icons';
 import { useAccount } from 'wagmi';
+import dynamic from 'next/dynamic';
 
 const ReferralLink = () => {
   const { Title, Text } = Typography;
@@ -81,4 +82,4 @@ const ReferralLink = () => {
   );
 };
 
-export default ReferralLink;
+export default dynamic(() => Promise.resolve(ReferralLink), { ssr: false });
