@@ -251,3 +251,19 @@ body {
   color: white;
   margin-top: 12px;
 }
+
+/* center a div */
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ant-table-thead > tr >th{
+  background: #22282C !important;
+}
+
+.table-row-light {
+  background: #22282C !important;
+}
