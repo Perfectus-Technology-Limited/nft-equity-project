@@ -1,15 +1,33 @@
-import React from 'react';
-import { Layout } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Typography } from 'antd';
 import Image from 'next/image';
 import { Sun, Moon } from 'react-feather';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTheme } from '@/redux/themeSlice';
 import WalletConnectWidget from '../WalletConnectWidget';
+import { useRouter } from 'next/router';
 
 const HeaderComponent = () => {
   const { Header } = Layout;
+  const router = useRouter();
   const { themeState } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
+  const { Title } = Typography;
+
+  // dynamic navbar items class names
+  const [nftMintClass, setNftMintClass] = useState('')
+  const [referralSystemClass, setReferralSystemClass] = useState('')
+
+  useEffect(() => {
+    if(router?.pathname === '/') {
+      setNftMintClass('text-primary')
+      setReferralSystemClass('')
+    } 
+    if(router?.pathname === '/referral-system') {
+      setNftMintClass('')
+      setReferralSystemClass('text-primary')
+    }
+  }, [router?.pathname])
 
   const toggleTheme = () => {
     if (themeState === 'dark') {
@@ -26,6 +44,18 @@ const HeaderComponent = () => {
       <div className="d-flex justify-content-between container">
         <div>
           <Image src="/Logo.svg" width={193} height={52} alt="logo" />
+        </div>
+
+        <div className="center">
+          <div className="d-flex">
+            <Title level={5} className={`m-0 mx-2 ${nftMintClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/')}>
+              NFT MINT
+            </Title>
+
+            <Title level={5} className={`m-0 mx-2 ${referralSystemClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/referral-system')}>
+              REFERRAL SYSTEM
+            </Title>
+          </div>
         </div>
 
         <div className="d-flex">
