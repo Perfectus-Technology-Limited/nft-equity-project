@@ -1,9 +1,11 @@
-import { Card, Typography, Table } from 'antd';
+import { Card, Typography, Table, Alert } from 'antd';
 import React from 'react';
 import dynamic from 'next/dynamic';
+import { useAccount } from 'wagmi';
 
 const ReferralsTable = () => {
   const { Title, Text } = Typography;
+  const { address } = useAccount();
 
   const dataSource = [
     {
@@ -88,14 +90,26 @@ const ReferralsTable = () => {
         </Title>
 
         <div className="mt-3">
-          <Table
-            dataSource={dataSource}
-            columns={columns}
-            rowKey="id"
-            rowClassName={(record, index) =>
-              index % 2 === 1 ? 'table-row-light' : ''
-            }
-          />
+          {address ? (
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              rowKey="id"
+              rowClassName={(record, index) =>
+                index % 2 === 1 ? 'table-row-light' : ''
+              }
+            />
+          ) : (
+              <Alert
+                message={
+                  <Text className="text-uppercase small" type="warning">
+                    Please connect your wallet to see your referrals
+                  </Text>
+                }
+                type="warning"
+                showIcon
+              />
+          )}
         </div>
       </div>
     </Card>
