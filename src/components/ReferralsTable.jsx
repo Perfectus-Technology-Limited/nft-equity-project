@@ -40,7 +40,7 @@ const ReferralsTable = () => {
 
   const columns = [
     {
-      title: <div className="text-center">Wallet Address</div>,
+      title: <div className="text-center text-light">Wallet Address</div>,
       dataIndex: 'wallet_address',
       key: 'id',
       render: (text) => (
@@ -50,7 +50,7 @@ const ReferralsTable = () => {
       ),
     },
     {
-      title: <div className="text-center">Referral Level</div>,
+      title: <div className="text-center text-light">Referral Level</div>,
       dataIndex: 'referral_level',
       key: 'id',
       render: (text) => (
@@ -60,7 +60,7 @@ const ReferralsTable = () => {
       ),
     },
     {
-      title: <div className="text-center">Amount</div>,
+      title: <div className="text-center text-light">Amount</div>,
       dataIndex: 'amount',
       key: 'id',
       render: (text) => (
@@ -70,7 +70,7 @@ const ReferralsTable = () => {
       ),
     },
     {
-      title: <div className="text-center">Rewards</div>,
+      title: <div className="text-center text-light">Rewards</div>,
       dataIndex: 'rewards',
       key: 'id',
       render: (text) => (
