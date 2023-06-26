@@ -21,10 +21,10 @@ const HeaderComponent = () => {
   useEffect(() => {
     if(router?.pathname === '/') {
       setNftMintClass('text-primary')
-      setReferralSystemClass('')
+      setReferralSystemClass('text-light')
     } 
     if(router?.pathname === '/referral-system') {
-      setNftMintClass('')
+      setNftMintClass('text-light')
       setReferralSystemClass('text-primary')
     }
   }, [router?.pathname])
