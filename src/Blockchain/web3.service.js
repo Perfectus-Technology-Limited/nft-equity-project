@@ -103,6 +103,33 @@ export const isWalletWhitelisted = async (address) => {
   }
 }
 
+export const mintNft = async (tierId, referralAddress, signer) => {
+  try {
+    const provider = getProvider(); 
+    const contractAddress = configs.nftContractAddress;
+    const contractABI = JSON.parse(configs.nftContractABI);
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const contractInstanceWithSigner = contractInstance.connect(signer);
+    const nftMintReceipt = await contractInstanceWithSigner.mintNft(tierId, referralAddress);
+    const result = await nftMintReceipt.wait();
+    return result;
+  } catch (error) {
+    let errorMessage =
+      'Something went wrong while trying to mint NFT. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+}
+
 export const fetchAllowance = async (address) => {
   try {
     const provider = getProvider();

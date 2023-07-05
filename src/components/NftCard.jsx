@@ -5,10 +5,12 @@ import {
   isNftPublic,
   isWalletWhitelisted,
   fetchAllowance,
-  approveTokens
+  approveTokens,
+  mintNft
 } from '@/Blockchain/web3.service';
 import { utils } from 'ethers';
 import { useAccount, useSigner } from 'wagmi';
+import { useRouter } from 'next/router'
 
 const nftProperties = {
   price: 0,
@@ -25,6 +27,9 @@ const NftCard = ({ tierData }) => {
   const [count, setCount] = useState(1);
   const [nftData, setNftData] = useState(nftProperties);
   const [isNftDataLoading, setIsNftDataLoading] = useState(false);
+
+  const router = useRouter()
+  const { ref } = router.query
 
   const [isPublic, setIsPublic] = useState(false);
   const [isPublicLoading, setIsPublicLoading] = useState(false);
@@ -284,6 +289,47 @@ const NftCard = ({ tierData }) => {
     }
   }
 
+  const handleMint = async () => {
+    try {
+      setIsMinting(true)
+      let referralAddress = '0x0000000000000000000000000000000000000000'
+      if(ref) {
+        referralAddress = ref.toString();
+        if(ref.toString().toLowerCase() === address.toString().toLowerCase()) {
+          setIsMinting(false)
+          return (
+            notification['error']({
+              key: 'nft_mint',
+              message: 'Error!',
+              description: 'Referral Address and Wallet Address cannot be same!',
+            })
+          )
+        }
+      }
+
+      const mintResult = await mintNft(tierData.tierId, referralAddress, signer);
+
+      if(mintResult) {
+        setIsMinting(false)
+        fetchTierData()
+        getAllowance()
+        notification['success']({
+          key: 'nft_mint',
+          message: 'Success!',
+          description: 'NFT minted successfully!',
+        })
+      }
+    } catch (error) {
+      setIsMinting(false)
+      console.log(error)
+      notification['error']({
+        key: 'nft_mint',
+        message: 'Error!',
+        description: error,
+      })
+    }
+  }
+
   return (
     <div className={`${tierData?.type}-nft-card`}>
       <div className="main-div p-3" style={{ margin: '2px' }}>
@@ -379,7 +425,7 @@ const NftCard = ({ tierData }) => {
           >
             Approve BUSD
           </Button>
-          <Button loading={isMinting} disabled={mintButtonDisabled}>
+          <Button loading={isMinting} disabled={mintButtonDisabled} onClick={() => handleMint()}>
             MINT NOW
           </Button>
         </div>
