@@ -5,6 +5,7 @@ import {
   getTokenDecimals,
   isNftPublic,
   isWalletWhitelisted,
+  fetchAllowance
 } from '@/Blockchain/web3.service';
 import { utils } from 'ethers';
 import { useAccount } from 'wagmi';
@@ -36,6 +37,9 @@ const NftCard = ({ tierData }) => {
 
   const [isMinting, setIsMinting] = useState(false);
   const [mintButtonDisabled, setMintButtonDisabled] = useState(true);
+
+  const [isAllowanceLoading, setIsAllowanceLoading] = useState(false);
+  const [allowance, setAllowance] = useState(0)
 
   const fetchNftDataNofiticationKey = 'fetch_nft_data';
   const fetchNftIsPublicNofiticationKey = 'fetch_is_public';
@@ -77,6 +81,35 @@ const NftCard = ({ tierData }) => {
     }
   }, [address]);
 
+  useEffect(() => {
+    if(address) {
+      getAllowance();
+    }
+  }, [address])
+
+  useEffect(() => {
+    if(allowance >= count * nftData.price) {
+      setIsApproved(true);
+    } else {
+      setIsApproved(false);
+    }
+  }, [allowance, count, nftData.price])
+
+  const getAllowance = async () => {
+    try {
+      setIsAllowanceLoading(true);
+      const result = await fetchAllowance(address);
+      const allowance = result.toString();
+      const allowanceFormattedString = utils.formatUnits(allowance, 18);
+      const allowanceFormattedNumber = Number(allowanceFormattedString);
+      setAllowance(allowanceFormattedNumber)
+      setIsAllowanceLoading(false);
+    } catch (error) {
+      setIsAllowanceLoading(false);
+      console.log(error);
+    }
+  }
+
   const isWhitelistedAccount = async () => {
     try {
       setIsWhitelistedLoading(true);
@@ -99,10 +132,9 @@ const NftCard = ({ tierData }) => {
     try {
       setIsNftDataLoading(true);
       const result = await getTierData(tierData.tierId); // to fetch NFT tier data
-      const tokenDecimals = await getTokenDecimals(); // BUSD token decimals
 
       const price = result.price.toString();
-      const priceFormattedString = utils.formatUnits(price, tokenDecimals);
+      const priceFormattedString = utils.formatUnits(price, 18);
       const priceFormattedNumber = Number(priceFormattedString); // NFT price as a number
 
       const sharedRevenue = result.revenueShare.toString();
@@ -316,7 +348,7 @@ const NftCard = ({ tierData }) => {
           <Button
             className={`${tierData?.type}-nft-btn text-dark text-uppercase`}
             loading={
-              isPublicLoading || isWhitelistedLoading || isApprovalLoading
+              isPublicLoading || isWhitelistedLoading || isApprovalLoading || isAllowanceLoading
             }
             disabled={approveButtonDisabled}
           >

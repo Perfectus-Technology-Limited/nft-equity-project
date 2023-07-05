@@ -102,3 +102,29 @@ export const isWalletWhitelisted = async (address) => {
     throw errorMessage;
   }
 }
+
+export const fetchAllowance = async (address) => {
+  try {
+    const provider = getProvider();
+    const contractAddress = configs.busdTokenAddress;
+    const contractABI = configs.commonERC20ContractABI;
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const spenderAddress = configs.nftContractAddress;
+    const allowanceResponse = await contractInstance.allowance(address, spenderAddress)
+    return allowanceResponse;
+  } catch (error) {
+    let errorMessage =
+      'Something went wrong while trying to fetch allowance. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+}
