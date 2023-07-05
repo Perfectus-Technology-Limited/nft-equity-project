@@ -30,7 +30,11 @@ const NftCard = ({ tierData }) => {
   const [isWhitelisted, setIsWhitelisted] = useState(false);
   const [isWhitelistedLoading, setIsWhitelistedLoading] = useState(false);
 
+  const [isApproved, setIsApproved] = useState(false);
+  const [isApprovalLoading, setIsApprovalLoading] = useState(false);
   const [approveButtonDisabled, setApproveButtonDisabled] = useState(true);
+
+  const [isMinting, setIsMinting] = useState(false);
   const [mintButtonDisabled, setMintButtonDisabled] = useState(true);
 
   const fetchNftDataNofiticationKey = 'fetch_nft_data';
@@ -53,12 +57,19 @@ const NftCard = ({ tierData }) => {
   }, [tierData]);
 
   useEffect(() => {
-    if(isPublic || isWhitelisted) {
-      setApproveButtonDisabled(false);
+    if (isPublic || isWhitelisted) {
+      if (isApproved) {
+        setApproveButtonDisabled(true);
+        setMintButtonDisabled(false);
+      } else {
+        setApproveButtonDisabled(false);
+        setMintButtonDisabled(true);
+      }
     } else {
       setApproveButtonDisabled(true);
+      setMintButtonDisabled(true);
     }
-  }, [isPublic, isWhitelisted])
+  }, [isPublic, isWhitelisted, isApproved]);
 
   useEffect(() => {
     if (address) {
@@ -74,11 +85,12 @@ const NftCard = ({ tierData }) => {
       setIsWhitelistedLoading(false);
     } catch (error) {
       setIsWhitelistedLoading(false);
-      notification['error']({
-        key: fetchWalletWhitelistedNotificationKey,
-        message: 'Error',
-        description: error,
-      });
+      console.log(error);
+      // notification['error']({
+      //   key: fetchWalletWhitelistedNotificationKey,
+      //   message: 'Error',
+      //   description: error,
+      // });
     }
   };
 
@@ -96,6 +108,9 @@ const NftCard = ({ tierData }) => {
       const sharedRevenue = result.revenueShare.toString();
       const sharedRevenueString = utils.formatUnits(sharedRevenue, 2);
       const sharedRevenueNumber = Number(sharedRevenueString); // shared revenue percentage
+
+      const aprString = utils.formatUnits(sharedRevenue, 3);
+      const aprNumber = Number(aprString); // APR
 
       const equityShare = result.equityShare.toString();
       const equityShareString = utils.formatUnits(equityShare, 2);
@@ -127,7 +142,7 @@ const NftCard = ({ tierData }) => {
         price: priceFormattedNumber,
         available: availableCount,
         sharedRevenue: sharedRevenueNumber,
-        APR: 0,
+        APR: aprNumber,
         equityShare: equityShareNumber,
       };
 
@@ -135,11 +150,12 @@ const NftCard = ({ tierData }) => {
       setIsNftDataLoading(false);
     } catch (error) {
       setIsNftDataLoading(true);
-      notification['error']({
-        key: fetchNftDataNofiticationKey,
-        message: 'Error',
-        description: error,
-      });
+      console.log(error);
+      // notification['error']({
+      //   key: fetchNftDataNofiticationKey,
+      //   message: 'Error',
+      //   description: error,
+      // });
     }
   };
 
@@ -203,11 +219,12 @@ const NftCard = ({ tierData }) => {
       setIsPublicLoading(false);
     } catch (error) {
       setIsPublicLoading(false);
-      notification['error']({
-        key: fetchNftIsPublicNofiticationKey,
-        message: 'Error',
-        description: error,
-      });
+      console.log(error);
+      // notification['error']({
+      //   key: fetchNftIsPublicNofiticationKey,
+      //   message: 'Error',
+      //   description: error,
+      // });
     }
   };
 
@@ -298,12 +315,16 @@ const NftCard = ({ tierData }) => {
         <div className="d-flex justify-content-around">
           <Button
             className={`${tierData?.type}-nft-btn text-dark text-uppercase`}
-            loading={isPublicLoading || isWhitelistedLoading}
+            loading={
+              isPublicLoading || isWhitelistedLoading || isApprovalLoading
+            }
             disabled={approveButtonDisabled}
           >
             Approve BUSD
           </Button>
-          <Button disabled={mintButtonDisabled}>MINT NOW</Button>
+          <Button loading={isMinting} disabled={mintButtonDisabled}>
+            MINT NOW
+          </Button>
         </div>
       </div>
     </div>
