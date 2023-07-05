@@ -20,8 +20,12 @@ const ReferralLink = () => {
   };
 
   useEffect(() => {
+    const origin =
+      typeof window !== 'undefined' && window.location.origin
+        ? window.location.origin
+        : '';
     if (address) {
-      setRefLink(process.env.NEXT_PUBLIC_REFERRAL_LINK_BASE_URL + address);
+      setRefLink(origin + '/?ref=' + address);
     } else {
       setRefLink(null);
     }
@@ -82,7 +86,9 @@ const ReferralLink = () => {
                 className="mt-3"
               >
                 <Card hoverable>
-                  <Title level={5} className="m-0">2</Title>
+                  <Title level={5} className="m-0">
+                    2
+                  </Title>
                   <Text type="secondary">
                     People signed up through your link
                   </Text>
@@ -99,10 +105,10 @@ const ReferralLink = () => {
                 className="mt-3"
               >
                 <Card hoverable>
-                  <Text type="secondary">
-                    Your Level: 3
-                  </Text>
-                  <Title level={5} className="m-0">0.25%</Title>
+                  <Text type="secondary">Your Level: 3</Text>
+                  <Title level={5} className="m-0">
+                    0.25%
+                  </Title>
                 </Card>
               </Col>
             </Row>

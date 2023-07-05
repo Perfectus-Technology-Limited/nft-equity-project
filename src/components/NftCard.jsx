@@ -2,13 +2,15 @@ import { Button, Spin, Tooltip, Typography, notification } from 'antd';
 import React, { useState, useEffect } from 'react';
 import {
   getTierData,
-  getTokenDecimals,
   isNftPublic,
   isWalletWhitelisted,
-  fetchAllowance
+  fetchAllowance,
+  approveTokens,
+  mintNft
 } from '@/Blockchain/web3.service';
 import { utils } from 'ethers';
-import { useAccount } from 'wagmi';
+import { useAccount, useSigner } from 'wagmi';
+import { useRouter } from 'next/router'
 
 const nftProperties = {
   price: 0,
@@ -18,12 +20,16 @@ const nftProperties = {
   equityShare: 0,
 };
 
-const NftCard = ({ tierData }) => {
+const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
   const { address } = useAccount();
+  const { data: signer } = useSigner();
   const { Title, Text } = Typography;
   const [count, setCount] = useState(1);
   const [nftData, setNftData] = useState(nftProperties);
   const [isNftDataLoading, setIsNftDataLoading] = useState(false);
+
+  const router = useRouter()
+  const { ref } = router.query
 
   const [isPublic, setIsPublic] = useState(false);
   const [isPublicLoading, setIsPublicLoading] = useState(false);
@@ -37,9 +43,6 @@ const NftCard = ({ tierData }) => {
 
   const [isMinting, setIsMinting] = useState(false);
   const [mintButtonDisabled, setMintButtonDisabled] = useState(true);
-
-  const [isAllowanceLoading, setIsAllowanceLoading] = useState(false);
-  const [allowance, setAllowance] = useState(0)
 
   const fetchNftDataNofiticationKey = 'fetch_nft_data';
   const fetchNftIsPublicNofiticationKey = 'fetch_is_public';
@@ -82,33 +85,12 @@ const NftCard = ({ tierData }) => {
   }, [address]);
 
   useEffect(() => {
-    if(address) {
-      getAllowance();
-    }
-  }, [address])
-
-  useEffect(() => {
     if(allowance >= count * nftData.price) {
       setIsApproved(true);
     } else {
       setIsApproved(false);
     }
   }, [allowance, count, nftData.price])
-
-  const getAllowance = async () => {
-    try {
-      setIsAllowanceLoading(true);
-      const result = await fetchAllowance(address);
-      const allowance = result.toString();
-      const allowanceFormattedString = utils.formatUnits(allowance, 18);
-      const allowanceFormattedNumber = Number(allowanceFormattedString);
-      setAllowance(allowanceFormattedNumber)
-      setIsAllowanceLoading(false);
-    } catch (error) {
-      setIsAllowanceLoading(false);
-      console.log(error);
-    }
-  }
 
   const isWhitelistedAccount = async () => {
     try {
@@ -260,6 +242,70 @@ const NftCard = ({ tierData }) => {
     }
   };
 
+  const handleApprove = async () => {
+    try {
+      setIsApprovalLoading(true);
+      const tokenAmount = count * nftData.price
+      const approvalResult = await approveTokens(tokenAmount, signer);
+
+      if(approvalResult) {
+        setIsApprovalLoading(false);
+        getAllowance();
+      } else {
+        setIsApprovalLoading(false);
+      }
+    } catch (error) {
+      setIsApprovalLoading(false);
+      console.log(error);
+      notification['error']({
+        key: 'approve',
+        message: 'Oops!',
+        description: error,
+      });
+    }
+  }
+
+  const handleMint = async () => {
+    try {
+      setIsMinting(true)
+      let referralAddress = '0x0000000000000000000000000000000000000000'
+      if(ref) {
+        referralAddress = ref.toString();
+        if(ref.toString().toLowerCase() === address.toString().toLowerCase()) {
+          setIsMinting(false)
+          return (
+            notification['error']({
+              key: 'nft_mint',
+              message: 'Error!',
+              description: 'Referral Address and Wallet Address cannot be same!',
+            })
+          )
+        }
+      }
+
+      const mintResult = await mintNft(tierData.tierId, referralAddress, signer);
+
+      if(mintResult) {
+        setIsMinting(false)
+        fetchTierData()
+        getAllowance()
+        notification['success']({
+          key: 'nft_mint',
+          message: 'Success!',
+          description: 'NFT minted successfully!',
+        })
+      }
+    } catch (error) {
+      setIsMinting(false)
+      console.log(error)
+      notification['error']({
+        key: 'nft_mint',
+        message: 'Error!',
+        description: error,
+      })
+    }
+  }
+
   return (
     <div className={`${tierData?.type}-nft-card`}>
       <div className="main-div p-3" style={{ margin: '2px' }}>
@@ -351,10 +397,11 @@ const NftCard = ({ tierData }) => {
               isPublicLoading || isWhitelistedLoading || isApprovalLoading || isAllowanceLoading
             }
             disabled={approveButtonDisabled}
+            onClick={() => handleApprove()}
           >
             Approve BUSD
           </Button>
-          <Button loading={isMinting} disabled={mintButtonDisabled}>
+          <Button loading={isMinting} disabled={mintButtonDisabled} onClick={() => handleMint()}>
             MINT NOW
           </Button>
         </div>

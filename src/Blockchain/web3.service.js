@@ -1,10 +1,11 @@
 import { ethers, utils } from 'ethers';
-import { getProvider } from '@wagmi/core';
 import { configs } from './web3.config';
 
 export const getTokenDecimals = async () => {
   try {
-    const provider = getProvider();
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.busdTokenAddress;
     const contractABI = configs.commonERC20ContractABI;
     const contractInstance = new ethers.Contract(
@@ -30,7 +31,9 @@ export const getTokenDecimals = async () => {
 
 export const getTierData = async (tierId) => {
   try {
-    const provider = getProvider();
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.nftContractAddress;
     const contractABI = JSON.parse(configs.nftContractABI);
     const contractInstance = new ethers.Contract(
@@ -55,7 +58,9 @@ export const getTierData = async (tierId) => {
 
 export const isNftPublic = async () => {
   try {
-    const provider = getProvider(); 
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.nftContractAddress;
     const contractABI = JSON.parse(configs.nftContractABI);
     const contractInstance = new ethers.Contract(
@@ -80,7 +85,9 @@ export const isNftPublic = async () => {
 
 export const isWalletWhitelisted = async (address) => {
   try {
-    const provider = getProvider(); 
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.nftContractAddress;
     const contractABI = JSON.parse(configs.nftContractABI);
     const contractInstance = new ethers.Contract(
@@ -103,9 +110,40 @@ export const isWalletWhitelisted = async (address) => {
   }
 }
 
+export const mintNft = async (tierId, referralAddress, signer) => {
+  try {
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
+    const contractAddress = configs.nftContractAddress;
+    const contractABI = JSON.parse(configs.nftContractABI);
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const contractInstanceWithSigner = contractInstance.connect(signer);
+    const nftMintReceipt = await contractInstanceWithSigner.mintNft(tierId, referralAddress);
+    const result = await nftMintReceipt.wait();
+    return result;
+  } catch (error) {
+    let errorMessage =
+      'Something went wrong while trying to mint NFT. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+}
+
 export const fetchAllowance = async (address) => {
   try {
-    const provider = getProvider();
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.busdTokenAddress;
     const contractABI = configs.commonERC20ContractABI;
     const contractInstance = new ethers.Contract(
@@ -119,6 +157,45 @@ export const fetchAllowance = async (address) => {
   } catch (error) {
     let errorMessage =
       'Something went wrong while trying to fetch allowance. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+}
+
+export const approveTokens = async (tokenAmount, signer) => {
+  try {
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
+    const contractAddress = configs.busdTokenAddress;
+    const contractABI = configs.commonERC20ContractABI;
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const contractInstanceWithSigner = contractInstance.connect(signer);
+    const spenderAddress = configs.nftContractAddress;
+    const actualAmountForApproval = utils.parseUnits(
+      tokenAmount.toString(),
+      18
+    );
+    const approveTokenReceipt = await contractInstanceWithSigner.approve(
+      spenderAddress,
+      actualAmountForApproval
+    );
+
+    const result = await approveTokenReceipt.wait();
+    return result;
+
+  } catch (error) {
+    let errorMessage =
+      'Something went wrong while trying to approve the token. Please try again';
     if (error && error.message) {
       errorMessage = error.message;
     }
