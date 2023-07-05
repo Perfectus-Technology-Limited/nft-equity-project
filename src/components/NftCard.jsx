@@ -20,7 +20,7 @@ const nftProperties = {
   equityShare: 0,
 };
 
-const NftCard = ({ tierData }) => {
+const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
   const { address } = useAccount();
   const { data: signer } = useSigner();
   const { Title, Text } = Typography;
@@ -43,9 +43,6 @@ const NftCard = ({ tierData }) => {
 
   const [isMinting, setIsMinting] = useState(false);
   const [mintButtonDisabled, setMintButtonDisabled] = useState(true);
-
-  const [isAllowanceLoading, setIsAllowanceLoading] = useState(false);
-  const [allowance, setAllowance] = useState(0)
 
   const fetchNftDataNofiticationKey = 'fetch_nft_data';
   const fetchNftIsPublicNofiticationKey = 'fetch_is_public';
@@ -88,33 +85,12 @@ const NftCard = ({ tierData }) => {
   }, [address]);
 
   useEffect(() => {
-    if(address) {
-      getAllowance();
-    }
-  }, [address])
-
-  useEffect(() => {
     if(allowance >= count * nftData.price) {
       setIsApproved(true);
     } else {
       setIsApproved(false);
     }
   }, [allowance, count, nftData.price])
-
-  const getAllowance = async () => {
-    try {
-      setIsAllowanceLoading(true);
-      const result = await fetchAllowance(address);
-      const allowance = result.toString();
-      const allowanceFormattedString = utils.formatUnits(allowance, 18);
-      const allowanceFormattedNumber = Number(allowanceFormattedString);
-      setAllowance(allowanceFormattedNumber)
-      setIsAllowanceLoading(false);
-    } catch (error) {
-      setIsAllowanceLoading(false);
-      console.log(error);
-    }
-  }
 
   const isWhitelistedAccount = async () => {
     try {
