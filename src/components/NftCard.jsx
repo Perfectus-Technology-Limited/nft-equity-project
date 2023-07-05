@@ -367,7 +367,7 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
         <div className="d-flex justify-content-between">
           <Text type="secondary">APR</Text>
           <Text>
-            ≤ {isNftDataLoading ? <Spin size="small" /> : nftData.APR} %
+          Up to {isNftDataLoading ? <Spin size="small" /> : nftData.APR} % / NFT
           </Text>
         </div>
 
