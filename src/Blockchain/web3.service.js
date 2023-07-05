@@ -1,10 +1,11 @@
 import { ethers, utils } from 'ethers';
-import { getProvider } from '@wagmi/core';
 import { configs } from './web3.config';
 
 export const getTokenDecimals = async () => {
   try {
-    const provider = getProvider();
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.busdTokenAddress;
     const contractABI = configs.commonERC20ContractABI;
     const contractInstance = new ethers.Contract(
@@ -30,7 +31,9 @@ export const getTokenDecimals = async () => {
 
 export const getTierData = async (tierId) => {
   try {
-    const provider = getProvider();
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.nftContractAddress;
     const contractABI = JSON.parse(configs.nftContractABI);
     const contractInstance = new ethers.Contract(
@@ -55,7 +58,9 @@ export const getTierData = async (tierId) => {
 
 export const isNftPublic = async () => {
   try {
-    const provider = getProvider(); 
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.nftContractAddress;
     const contractABI = JSON.parse(configs.nftContractABI);
     const contractInstance = new ethers.Contract(
@@ -80,7 +85,9 @@ export const isNftPublic = async () => {
 
 export const isWalletWhitelisted = async (address) => {
   try {
-    const provider = getProvider(); 
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.nftContractAddress;
     const contractABI = JSON.parse(configs.nftContractABI);
     const contractInstance = new ethers.Contract(
@@ -105,7 +112,9 @@ export const isWalletWhitelisted = async (address) => {
 
 export const mintNft = async (tierId, referralAddress, signer) => {
   try {
-    const provider = getProvider(); 
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.nftContractAddress;
     const contractABI = JSON.parse(configs.nftContractABI);
     const contractInstance = new ethers.Contract(
@@ -132,7 +141,9 @@ export const mintNft = async (tierId, referralAddress, signer) => {
 
 export const fetchAllowance = async (address) => {
   try {
-    const provider = getProvider();
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.busdTokenAddress;
     const contractABI = configs.commonERC20ContractABI;
     const contractInstance = new ethers.Contract(
@@ -158,8 +169,9 @@ export const fetchAllowance = async (address) => {
 
 export const approveTokens = async (tokenAmount, signer) => {
   try {
-    console.log('calledd.....')
-    const provider = getProvider();
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
     const contractAddress = configs.busdTokenAddress;
     const contractABI = configs.commonERC20ContractABI;
     const contractInstance = new ethers.Contract(
