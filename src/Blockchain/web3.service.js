@@ -52,3 +52,53 @@ export const getTierData = async (tierId) => {
     throw errorMessage;
   }
 };
+
+export const isNftPublic = async () => {
+  try {
+    const provider = getProvider(); 
+    const contractAddress = configs.nftContractAddress;
+    const contractABI = JSON.parse(configs.nftContractABI);
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const isPublicResponse = await contractInstance.isPublic();
+    return isPublicResponse
+  } catch (error) {
+    let errorMessage =
+      'Something went wrong while trying to fetch if NFT is public or not. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+}
+
+export const isWalletWhitelisted = async (address) => {
+  try {
+    const provider = getProvider(); 
+    const contractAddress = configs.nftContractAddress;
+    const contractABI = JSON.parse(configs.nftContractABI);
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const isWhitelistedResponse = await contractInstance.isWhitelisted(address);
+    return isWhitelistedResponse;
+  } catch (error) {
+    let errorMessage =
+      'Something went wrong while trying to fetch if wallet is whitelisted or not. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+}

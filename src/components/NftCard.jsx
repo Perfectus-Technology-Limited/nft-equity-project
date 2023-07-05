@@ -1,7 +1,13 @@
-import { Button, Spin, Tooltip, Typography } from 'antd';
+import { Button, Spin, Tooltip, Typography, notification } from 'antd';
 import React, { useState, useEffect } from 'react';
-import { getTierData, getTokenDecimals } from '@/Blockchain/web3.service';
+import {
+  getTierData,
+  getTokenDecimals,
+  isNftPublic,
+  isWalletWhitelisted,
+} from '@/Blockchain/web3.service';
 import { utils } from 'ethers';
+import { useAccount } from 'wagmi';
 
 const nftProperties = {
   price: 0,
@@ -12,10 +18,24 @@ const nftProperties = {
 };
 
 const NftCard = ({ tierData }) => {
+  const { address } = useAccount();
   const { Title, Text } = Typography;
   const [count, setCount] = useState(1);
   const [nftData, setNftData] = useState(nftProperties);
   const [isNftDataLoading, setIsNftDataLoading] = useState(false);
+
+  const [isPublic, setIsPublic] = useState(false);
+  const [isPublicLoading, setIsPublicLoading] = useState(false);
+
+  const [isWhitelisted, setIsWhitelisted] = useState(false);
+  const [isWhitelistedLoading, setIsWhitelistedLoading] = useState(false);
+
+  const [approveButtonDisabled, setApproveButtonDisabled] = useState(true);
+  const [mintButtonDisabled, setMintButtonDisabled] = useState(true);
+
+  const fetchNftDataNofiticationKey = 'fetch_nft_data';
+  const fetchNftIsPublicNofiticationKey = 'fetch_is_public';
+  const fetchWalletWhitelistedNotificationKey = 'fetch_is_whitelisted';
 
   const handleDecrease = () => {
     if (count > 1) {
@@ -29,9 +49,40 @@ const NftCard = ({ tierData }) => {
 
   useEffect(() => {
     fetchTierData();
+    isNFTPublic();
   }, [tierData]);
 
-  // this function will fetch NFT details for every tier
+  useEffect(() => {
+    if(isPublic || isWhitelisted) {
+      setApproveButtonDisabled(false);
+    } else {
+      setApproveButtonDisabled(true);
+    }
+  }, [isPublic, isWhitelisted])
+
+  useEffect(() => {
+    if (address) {
+      isWhitelistedAccount();
+    }
+  }, [address]);
+
+  const isWhitelistedAccount = async () => {
+    try {
+      setIsWhitelistedLoading(true);
+      const result = await isWalletWhitelisted(address);
+      setIsWhitelisted(result);
+      setIsWhitelistedLoading(false);
+    } catch (error) {
+      setIsWhitelistedLoading(false);
+      notification['error']({
+        key: fetchWalletWhitelistedNotificationKey,
+        message: 'Error',
+        description: error,
+      });
+    }
+  };
+
+  // this function will fetch NFT details for each tier
   const fetchTierData = async () => {
     try {
       setIsNftDataLoading(true);
@@ -83,11 +134,16 @@ const NftCard = ({ tierData }) => {
       setNftData(nftPropertiesObject);
       setIsNftDataLoading(false);
     } catch (error) {
-      setIsNftDataLoading(false);
-      console.log(error);
+      setIsNftDataLoading(true);
+      notification['error']({
+        key: fetchNftDataNofiticationKey,
+        message: 'Error',
+        description: error,
+      });
     }
   };
 
+  // this function will return NFT webm for each tier
   const getNFT = () => {
     switch (tierData.tierId) {
       case 0:
@@ -136,6 +192,22 @@ const NftCard = ({ tierData }) => {
         );
       default:
         break;
+    }
+  };
+
+  const isNFTPublic = async () => {
+    try {
+      setIsPublicLoading(true);
+      const result = await isNftPublic();
+      setIsPublic(result);
+      setIsPublicLoading(false);
+    } catch (error) {
+      setIsPublicLoading(false);
+      notification['error']({
+        key: fetchNftIsPublicNofiticationKey,
+        message: 'Error',
+        description: error,
+      });
     }
   };
 
@@ -208,7 +280,8 @@ const NftCard = ({ tierData }) => {
         <div className="d-flex justify-content-between">
           <Text type="secondary">Equity share</Text>
           <Text>
-            {isNftDataLoading ? <Spin size="small" /> : nftData.equityShare} % / NFT
+            {isNftDataLoading ? <Spin size="small" /> : nftData.equityShare} % /
+            NFT
           </Text>
         </div>
 
@@ -224,12 +297,13 @@ const NftCard = ({ tierData }) => {
         <hr />
         <div className="d-flex justify-content-around">
           <Button
-            type="ghost"
             className={`${tierData?.type}-nft-btn text-dark text-uppercase`}
+            loading={isPublicLoading || isWhitelistedLoading}
+            disabled={approveButtonDisabled}
           >
             Approve BUSD
           </Button>
-          <Button disabled>MINT NOW</Button>
+          <Button disabled={mintButtonDisabled}>MINT NOW</Button>
         </div>
       </div>
     </div>
