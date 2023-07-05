@@ -20,8 +20,12 @@ const ReferralRewards = () => {
   };
 
   useEffect(() => {
+    const origin =
+      typeof window !== 'undefined' && window.location.origin
+        ? window.location.origin
+        : '';
     if (address) {
-      setRefLink(process.env.NEXT_PUBLIC_REFERRAL_LINK_BASE_URL + address);
+      setRefLink(origin + '/?ref=' + address);
     } else {
       setRefLink(null);
     }

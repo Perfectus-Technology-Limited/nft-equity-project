@@ -128,3 +128,41 @@ export const fetchAllowance = async (address) => {
     throw errorMessage;
   }
 }
+
+export const approveTokens = async (tokenAmount, signer) => {
+  try {
+    console.log('calledd.....')
+    const provider = getProvider();
+    const contractAddress = configs.busdTokenAddress;
+    const contractABI = configs.commonERC20ContractABI;
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const contractInstanceWithSigner = contractInstance.connect(signer);
+    const spenderAddress = configs.nftContractAddress;
+    const actualAmountForApproval = utils.parseUnits(
+      tokenAmount.toString(),
+      18
+    );
+    const approveTokenReceipt = await contractInstanceWithSigner.approve(
+      spenderAddress,
+      actualAmountForApproval
+    );
+
+    const result = await approveTokenReceipt.wait();
+    return result;
+
+  } catch (error) {
+    let errorMessage =
+      'Something went wrong while trying to approve the token. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+}

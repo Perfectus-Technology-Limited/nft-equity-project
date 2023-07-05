@@ -2,13 +2,13 @@ import { Button, Spin, Tooltip, Typography, notification } from 'antd';
 import React, { useState, useEffect } from 'react';
 import {
   getTierData,
-  getTokenDecimals,
   isNftPublic,
   isWalletWhitelisted,
-  fetchAllowance
+  fetchAllowance,
+  approveTokens
 } from '@/Blockchain/web3.service';
 import { utils } from 'ethers';
-import { useAccount } from 'wagmi';
+import { useAccount, useSigner } from 'wagmi';
 
 const nftProperties = {
   price: 0,
@@ -20,6 +20,7 @@ const nftProperties = {
 
 const NftCard = ({ tierData }) => {
   const { address } = useAccount();
+  const { data: signer } = useSigner();
   const { Title, Text } = Typography;
   const [count, setCount] = useState(1);
   const [nftData, setNftData] = useState(nftProperties);
@@ -260,6 +261,29 @@ const NftCard = ({ tierData }) => {
     }
   };
 
+  const handleApprove = async () => {
+    try {
+      setIsApprovalLoading(true);
+      const tokenAmount = count * nftData.price
+      const approvalResult = await approveTokens(tokenAmount, signer);
+
+      if(approvalResult) {
+        setIsApprovalLoading(false);
+        getAllowance();
+      } else {
+        setIsApprovalLoading(false);
+      }
+    } catch (error) {
+      setIsApprovalLoading(false);
+      console.log(error);
+      notification['error']({
+        key: 'approve',
+        message: 'Oops!',
+        description: error,
+      });
+    }
+  }
+
   return (
     <div className={`${tierData?.type}-nft-card`}>
       <div className="main-div p-3" style={{ margin: '2px' }}>
@@ -351,6 +375,7 @@ const NftCard = ({ tierData }) => {
               isPublicLoading || isWhitelistedLoading || isApprovalLoading || isAllowanceLoading
             }
             disabled={approveButtonDisabled}
+            onClick={() => handleApprove()}
           >
             Approve BUSD
           </Button>
