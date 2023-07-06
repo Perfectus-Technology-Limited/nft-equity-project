@@ -245,3 +245,8 @@ body {
 .table-row-light {
   background: #d9d9d9 !important;
 }
+
+.ant-drawer-body {
+  background-color: #303E4E !important;
+  color: #fff !important;
+}
