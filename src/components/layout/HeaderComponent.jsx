@@ -17,15 +17,23 @@ const HeaderComponent = () => {
   // dynamic navbar items class names
   const [nftMintClass, setNftMintClass] = useState('')
   const [referralSystemClass, setReferralSystemClass] = useState('')
+  const [adminClass, setAdminClass] = useState('')
 
   useEffect(() => {
     if(router?.pathname === '/') {
       setNftMintClass('text-primary')
       setReferralSystemClass('text-light')
+      setAdminClass('text-light')
     } 
     if(router?.pathname === '/referral-system') {
       setNftMintClass('text-light')
       setReferralSystemClass('text-primary')
+      setAdminClass('text-light')
+    }
+    if(router?.pathname === '/admin') {
+      setNftMintClass('text-light')
+      setReferralSystemClass('text-light')
+      setAdminClass('text-primary')
     }
   }, [router?.pathname])
 
@@ -56,7 +64,7 @@ const HeaderComponent = () => {
               REFERRAL SYSTEM
             </Title>
 
-            <Title level={5} className={`m-0 mx-2 ${referralSystemClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/admin')}>
+            <Title level={5} className={`m-0 mx-2 ${adminClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/admin')}>
               ADMIN
             </Title>
           </div>
