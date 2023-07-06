@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setTheme } from '@/redux/themeSlice';
 import WalletConnectWidget from '../WalletConnectWidget';
 import { useRouter } from 'next/router';
+import { useAccount } from 'wagmi';
 
 const HeaderComponent = () => {
   const { Header } = Layout;
@@ -13,29 +14,50 @@ const HeaderComponent = () => {
   const { themeState } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const { Title } = Typography;
+  const { address: account } = useAccount();
+
+  const adminAccounts = process.env.NEXT_PUBLIC_ADMINS_ACCOUNT;
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // dynamic navbar items class names
-  const [nftMintClass, setNftMintClass] = useState('')
-  const [referralSystemClass, setReferralSystemClass] = useState('')
-  const [adminClass, setAdminClass] = useState('')
+  const [nftMintClass, setNftMintClass] = useState('');
+  const [referralSystemClass, setReferralSystemClass] = useState('');
+  const [adminClass, setAdminClass] = useState('');
+
+  // check is admin
+  useEffect(() => {
+    let admins = adminAccounts ? adminAccounts.split(',') : null;
+    if (account && admins?.length > 0) {
+      const result = admins.find(
+        (item) => item.toLowerCase() === account.toLowerCase()
+      );
+      if (result) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    } else {
+      setIsAdmin(false);
+    }
+  }, [account, adminAccounts]);
 
   useEffect(() => {
-    if(router?.pathname === '/') {
-      setNftMintClass('text-primary')
-      setReferralSystemClass('text-light')
-      setAdminClass('text-light')
-    } 
-    if(router?.pathname === '/referral-system') {
-      setNftMintClass('text-light')
-      setReferralSystemClass('text-primary')
-      setAdminClass('text-light')
+    if (router?.pathname === '/') {
+      setNftMintClass('text-primary');
+      setReferralSystemClass('text-light');
+      setAdminClass('text-light');
     }
-    if(router?.pathname === '/admin') {
-      setNftMintClass('text-light')
-      setReferralSystemClass('text-light')
-      setAdminClass('text-primary')
+    if (router?.pathname === '/referral-system') {
+      setNftMintClass('text-light');
+      setReferralSystemClass('text-primary');
+      setAdminClass('text-light');
     }
-  }, [router?.pathname])
+    if (router?.pathname === '/admin') {
+      setNftMintClass('text-light');
+      setReferralSystemClass('text-light');
+      setAdminClass('text-primary');
+    }
+  }, [router?.pathname]);
 
   const toggleTheme = () => {
     if (themeState === 'dark') {
@@ -56,17 +78,34 @@ const HeaderComponent = () => {
 
         <div className="center">
           <div className="d-flex">
-            <Title level={5} className={`m-0 mx-2 ${nftMintClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/')}>
+            <Title
+              level={5}
+              className={`m-0 mx-2 ${nftMintClass}`}
+              style={{ cursor: 'pointer' }}
+              onClick={() => router.push('/')}
+            >
               NFT MINT
             </Title>
 
-            <Title level={5} className={`m-0 mx-2 ${referralSystemClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/referral-system')}>
+            <Title
+              level={5}
+              className={`m-0 mx-2 ${referralSystemClass}`}
+              style={{ cursor: 'pointer' }}
+              onClick={() => router.push('/referral-system')}
+            >
               REFERRAL SYSTEM
             </Title>
 
-            <Title level={5} className={`m-0 mx-2 ${adminClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/admin')}>
-              ADMIN
-            </Title>
+            {isAdmin && (
+              <Title
+                level={5}
+                className={`m-0 mx-2 ${adminClass}`}
+                style={{ cursor: 'pointer' }}
+                onClick={() => router.push('/admin')}
+              >
+                ADMIN
+              </Title>
+            )}
           </div>
         </div>
 
