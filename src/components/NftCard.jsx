@@ -6,11 +6,11 @@ import {
   isWalletWhitelisted,
   fetchAllowance,
   approveTokens,
-  mintNft
+  mintNft,
 } from '@/Blockchain/web3.service';
 import { utils } from 'ethers';
 import { useAccount, useSigner } from 'wagmi';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 const nftProperties = {
   price: 0,
@@ -28,8 +28,8 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
   const [nftData, setNftData] = useState(nftProperties);
   const [isNftDataLoading, setIsNftDataLoading] = useState(false);
 
-  const router = useRouter()
-  const { ref } = router.query
+  const router = useRouter();
+  const { ref } = router.query;
 
   const [isPublic, setIsPublic] = useState(false);
   const [isPublicLoading, setIsPublicLoading] = useState(false);
@@ -85,12 +85,12 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
   }, [address]);
 
   useEffect(() => {
-    if(allowance >= count * nftData.price) {
+    if (allowance >= count * nftData.price) {
       setIsApproved(true);
     } else {
       setIsApproved(false);
     }
-  }, [allowance, count, nftData.price])
+  }, [allowance, count, nftData.price]);
 
   const isWhitelistedAccount = async () => {
     try {
@@ -245,10 +245,10 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
   const handleApprove = async () => {
     try {
       setIsApprovalLoading(true);
-      const tokenAmount = count * nftData.price
+      const tokenAmount = count * nftData.price;
       const approvalResult = await approveTokens(tokenAmount, signer);
 
-      if(approvalResult) {
+      if (approvalResult) {
         setIsApprovalLoading(false);
         getAllowance();
       } else {
@@ -263,48 +263,50 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
         description: error,
       });
     }
-  }
+  };
 
   const handleMint = async () => {
     try {
-      setIsMinting(true)
-      let referralAddress = '0x0000000000000000000000000000000000000000'
-      if(ref) {
+      setIsMinting(true);
+      let referralAddress = '0x0000000000000000000000000000000000000000';
+      if (ref) {
         referralAddress = ref.toString();
-        if(ref.toString().toLowerCase() === address.toString().toLowerCase()) {
-          setIsMinting(false)
-          return (
-            notification['error']({
-              key: 'nft_mint',
-              message: 'Error!',
-              description: 'Referral Address and Wallet Address cannot be same!',
-            })
-          )
+        if (ref.toString().toLowerCase() === address.toString().toLowerCase()) {
+          setIsMinting(false);
+          return notification['error']({
+            key: 'nft_mint',
+            message: 'Error!',
+            description: 'Referral Address and Wallet Address cannot be same!',
+          });
         }
       }
 
-      const mintResult = await mintNft(tierData.tierId, referralAddress, signer);
+      const mintResult = await mintNft(
+        tierData.tierId,
+        referralAddress,
+        signer
+      );
 
-      if(mintResult) {
-        setIsMinting(false)
-        fetchTierData()
-        getAllowance()
+      if (mintResult) {
+        setIsMinting(false);
+        fetchTierData();
+        getAllowance();
         notification['success']({
           key: 'nft_mint',
           message: 'Success!',
           description: 'NFT minted successfully!',
-        })
+        });
       }
     } catch (error) {
-      setIsMinting(false)
-      console.log(error)
+      setIsMinting(false);
+      console.log(error);
       notification['error']({
         key: 'nft_mint',
         message: 'Error!',
         description: error,
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className={`${tierData?.type}-nft-card`}>
@@ -367,7 +369,8 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
         <div className="d-flex justify-content-between">
           <Text type="secondary">APR</Text>
           <Text>
-            ≤ {isNftDataLoading ? <Spin size="small" /> : nftData.APR} %
+            Up to {isNftDataLoading ? <Spin size="small" /> : nftData.APR} % /
+            NFT
           </Text>
         </div>
 
@@ -392,16 +395,24 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
         <hr />
         <div className="d-flex justify-content-around">
           <Button
-            className={`${tierData?.type}-nft-btn text-dark text-uppercase`}
+            className={`${tierData?.type}-nft-btn ${approveButtonDisabled ? 'text-secondary': 'text-dark'} text-uppercase`}
             loading={
-              isPublicLoading || isWhitelistedLoading || isApprovalLoading || isAllowanceLoading
+              isPublicLoading ||
+              isWhitelistedLoading ||
+              isApprovalLoading ||
+              isAllowanceLoading
             }
             disabled={approveButtonDisabled}
             onClick={() => handleApprove()}
           >
             Approve BUSD
           </Button>
-          <Button loading={isMinting} disabled={mintButtonDisabled} onClick={() => handleMint()}>
+          <Button
+            className={`${tierData?.type}-nft-btn ${mintButtonDisabled ? 'text-secondary' : 'text-dark'} text-secondary text-uppercase`}
+            loading={isMinting}
+            disabled={mintButtonDisabled}
+            onClick={() => handleMint()}
+          >
             MINT NOW
           </Button>
         </div>

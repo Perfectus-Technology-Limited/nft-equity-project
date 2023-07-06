@@ -4,30 +4,83 @@ import Image from 'next/image';
 import { Sun, Moon } from 'react-feather';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTheme } from '@/redux/themeSlice';
+import { openMenu } from '@/redux/mobileMenuSlice';
 import WalletConnectWidget from '../WalletConnectWidget';
 import { useRouter } from 'next/router';
+import { useAccount } from 'wagmi';
+import { MenuOutlined } from '@ant-design/icons'
+import MobileMenuComponent from './MobileMenuComponent';
 
 const HeaderComponent = () => {
+  const [windowSize, setWindowSize] = useState('');
   const { Header } = Layout;
   const router = useRouter();
   const { themeState } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const { Title } = Typography;
+  const { address: account } = useAccount();
+
+  const adminAccounts = process.env.NEXT_PUBLIC_ADMINS_ACCOUNT;
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // dynamic navbar items class names
-  const [nftMintClass, setNftMintClass] = useState('')
-  const [referralSystemClass, setReferralSystemClass] = useState('')
+  const [nftMintClass, setNftMintClass] = useState('');
+  const [referralSystemClass, setReferralSystemClass] = useState('');
+  const [adminClass, setAdminClass] = useState('');
 
   useEffect(() => {
-    if(router?.pathname === '/') {
-      setNftMintClass('text-primary')
-      setReferralSystemClass('text-light')
-    } 
-    if(router?.pathname === '/referral-system') {
-      setNftMintClass('text-light')
-      setReferralSystemClass('text-primary')
+    // make sure your function is being called in client side only
+    if (typeof window !== 'undefined') {
+      setWindowSize(window.innerWidth);
     }
-  }, [router?.pathname])
+  }, []);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  });
+
+  // check is admin
+  useEffect(() => {
+    let admins = adminAccounts ? adminAccounts.split(',') : null;
+    if (account && admins?.length > 0) {
+      const result = admins.find(
+        (item) => item.toLowerCase() === account.toLowerCase()
+      );
+      if (result) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    } else {
+      setIsAdmin(false);
+    }
+  }, [account, adminAccounts]);
+
+  useEffect(() => {
+    if (router?.pathname === '/') {
+      setNftMintClass('text-primary');
+      setReferralSystemClass('text-light');
+      setAdminClass('text-light');
+    }
+    if (router?.pathname === '/referral-system') {
+      setNftMintClass('text-light');
+      setReferralSystemClass('text-primary');
+      setAdminClass('text-light');
+    }
+    if (router?.pathname === '/admin') {
+      setNftMintClass('text-light');
+      setReferralSystemClass('text-light');
+      setAdminClass('text-primary');
+    }
+  }, [router?.pathname]);
 
   const toggleTheme = () => {
     if (themeState === 'dark') {
@@ -40,50 +93,87 @@ const HeaderComponent = () => {
   };
 
   return (
-    <Header className="fixed-top nft-header">
+    <Header className="fixed-top nft-header" style={{zIndex: 100}}>
       <div className="d-flex justify-content-between container">
         <div>
-          <Image src="/Logo.svg" width={193} height={52} alt="logo" />
+          {windowSize >= 1000 ? (
+            <Image src="/Logo.svg" width={193} height={52} alt="logo" />
+          ) : (
+            <div style={{ marginLeft: '-50px' }}>
+              <Image src="/Logo.svg" width={120} height={52} alt="logo" />
+            </div>
+          )}
         </div>
 
-        <div className="center">
+        {windowSize >= 1000 && (
+          <div className="center">
+            <div className="d-flex">
+              <Title
+                level={5}
+                className={`m-0 mx-2 ${nftMintClass}`}
+                style={{ cursor: 'pointer' }}
+                onClick={() => router.push('/')}
+              >
+                NFT MINT
+              </Title>
+
+              <Title
+                level={5}
+                className={`m-0 mx-2 ${referralSystemClass}`}
+                style={{ cursor: 'pointer' }}
+                onClick={() => router.push('/referral-system')}
+              >
+                REFERRAL SYSTEM
+              </Title>
+
+              {isAdmin && (
+                <Title
+                  level={5}
+                  className={`m-0 mx-2 ${adminClass}`}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => router.push('/admin')}
+                >
+                  ADMIN
+                </Title>
+              )}
+            </div>
+          </div>
+        )}
+
+        {windowSize >= 1000 ? (
           <div className="d-flex">
-            <Title level={5} className={`m-0 mx-2 ${nftMintClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/')}>
-              NFT MINT
-            </Title>
+            <div style={{ marginRight: '10px' }}>
+              <WalletConnectWidget />
+            </div>
 
-            <Title level={5} className={`m-0 mx-2 ${referralSystemClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/referral-system')}>
-              REFERRAL SYSTEM
-            </Title>
+            <div style={{ marginTop: '-3px' }}>
+              {themeState === 'light' && (
+                <Sun
+                  size={20}
+                  color="white"
+                  style={{ cursor: 'pointer' }}
+                  onClick={toggleTheme}
+                />
+              )}
+
+              {themeState === 'dark' && (
+                <Moon
+                  size={20}
+                  color="white"
+                  style={{ cursor: 'pointer' }}
+                  onClick={toggleTheme}
+                />
+              )}
+            </div>
           </div>
-        </div>
-
-        <div className="d-flex">
-          <div style={{ marginRight: '10px' }}>
-            <WalletConnectWidget />
+        ) : (
+          <div style={{ marginRight: '-50px' }} className="text-light">
+            <MenuOutlined onClick={() => dispatch(openMenu())} />
           </div>
-
-          <div style={{ marginTop: '-3px' }}>
-            {themeState === 'light' && (
-              <Sun
-                size={20}
-                color="white"
-                style={{ cursor: 'pointer' }}
-                onClick={toggleTheme}
-              />
-            )}
-
-            {themeState === 'dark' && (
-              <Moon
-                size={20}
-                color="white"
-                style={{ cursor: 'pointer' }}
-                onClick={toggleTheme}
-              />
-            )}
-          </div>
-        </div>
+        )}
       </div>
+
+      <MobileMenuComponent />
     </Header>
   );
 };
