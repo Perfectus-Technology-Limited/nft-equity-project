@@ -55,6 +55,10 @@ const HeaderComponent = () => {
             <Title level={5} className={`m-0 mx-2 ${referralSystemClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/referral-system')}>
               REFERRAL SYSTEM
             </Title>
+
+            <Title level={5} className={`m-0 mx-2 ${referralSystemClass}`} style={{cursor: 'pointer'}} onClick={() => router.push('/admin')}>
+              ADMIN
+            </Title>
           </div>
         </div>
 
