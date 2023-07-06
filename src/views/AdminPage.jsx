@@ -108,7 +108,7 @@ const AdminPage = () => {
         errorMessage = error.reason;
       }
       console.log('WRITE ERROR ', error);
-      setResultView((prev) => ({ ...prev, [functionName]: 'error' }));
+      setResultView((prev) => ({ ...prev, [functionName]: errorMessage }));
       setIsFunctionCallLoading((prev) => ({ ...prev, [functionName]: false }));
       notification['error']({
         message: 'Execution Error',
@@ -132,7 +132,7 @@ const AdminPage = () => {
     const inputArray = [];
     for (let i = 0; i < inputArgs.length; i++) {
       inputArray.push(
-        <div className="mt-1">
+        <div className="mt-1" key={i}>
           <span key={i}>{inputArgs[i].name}</span>
           {inputArgs[i].type === 'bool' ? (
             <Select
@@ -171,9 +171,9 @@ const AdminPage = () => {
       <Row>
         <Col span={24}>
           {writeFunctions.map((item, index) => (
-            <Card className="nft-square-card nft-dark-card mt-3">
+            <Card className="nft-square-card nft-dark-card mt-3" key={index}>
               <Collapse defaultActiveKey={['1']}>
-                <Panel header={item.name} key="3">
+                <Panel header={item.name}>
                   {item.inputs ? (
                     <>{buildInputRows(item.name, item.inputs)}</>
                   ) : (
