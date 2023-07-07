@@ -22,6 +22,7 @@ const MobileMenuComponent = () => {
   const [nftMintClass, setNftMintClass] = useState('');
   const [referralSystemClass, setReferralSystemClass] = useState('');
   const [adminClass, setAdminClass] = useState('');
+  const [myNftClass, setMyNftClass] = useState('');
 
   const adminAccounts = process.env.NEXT_PUBLIC_ADMINS_ACCOUNT;
   const [isAdmin, setIsAdmin] = useState(false);
@@ -48,16 +49,25 @@ const MobileMenuComponent = () => {
       setNftMintClass('text-primary');
       setReferralSystemClass('text-light');
       setAdminClass('text-light');
+      setMyNftClass('text-light');
     }
     if (router?.pathname === '/referral-system') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-primary');
       setAdminClass('text-light');
+      setMyNftClass('text-light');
     }
     if (router?.pathname === '/admin') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-light');
       setAdminClass('text-primary');
+      setMyNftClass('text-light');
+    }
+    if (router?.pathname === '/user-nfts') {
+      setNftMintClass('text-light');
+      setReferralSystemClass('text-light');
+      setAdminClass('text-light');
+      setMyNftClass('text-primary');
     }
   }, [router?.pathname]);
 
@@ -76,7 +86,7 @@ const MobileMenuComponent = () => {
       placement="left"
       onClose={() => dispatch(closeMenu())}
       open={menuOpened}
-      style={{ zIndex: 9999 }}
+      style={{ zIndex: 9999, width: '100vw' }}
       closable={false}
     >
       <div className="d-flex justify-content-between">
@@ -91,7 +101,7 @@ const MobileMenuComponent = () => {
         </div>
 
         <div>
-          <Text className='text-light'>
+          <Text className="text-light">
             <CloseCircleOutlined onClick={() => dispatch(closeMenu())} />
           </Text>
         </div>
@@ -119,6 +129,17 @@ const MobileMenuComponent = () => {
         >
           REFERRAL SYSTEM
         </Title>
+
+        {account && (
+          <Title
+            level={5}
+            className={`m-0 mx-2 ${myNftClass} mt-4`}
+            style={{ cursor: 'pointer' }}
+            onClick={() => router.push('/user-nfts')}
+          >
+            MY NFTS
+          </Title>
+        )}
 
         {isAdmin && (
           <Title

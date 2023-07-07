@@ -143,7 +143,7 @@ const HeaderComponent = () => {
                   style={{ cursor: 'pointer' }}
                   onClick={() => router.push('/user-nfts')}
                 >
-                  MY NFT
+                  MY NFTS
                 </Title>
               )}
 
