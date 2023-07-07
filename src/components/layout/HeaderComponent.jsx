@@ -8,7 +8,7 @@ import { openMenu } from '@/redux/mobileMenuSlice';
 import WalletConnectWidget from '../WalletConnectWidget';
 import { useRouter } from 'next/router';
 import { useAccount } from 'wagmi';
-import { MenuOutlined } from '@ant-design/icons'
+import { MenuOutlined } from '@ant-design/icons';
 import MobileMenuComponent from './MobileMenuComponent';
 
 const HeaderComponent = () => {
@@ -27,6 +27,7 @@ const HeaderComponent = () => {
   const [nftMintClass, setNftMintClass] = useState('');
   const [referralSystemClass, setReferralSystemClass] = useState('');
   const [adminClass, setAdminClass] = useState('');
+  const [myNftClass, setMyNftClass] = useState('');
 
   useEffect(() => {
     // make sure your function is being called in client side only
@@ -69,16 +70,25 @@ const HeaderComponent = () => {
       setNftMintClass('text-primary');
       setReferralSystemClass('text-light');
       setAdminClass('text-light');
+      setMyNftClass('text-light');
     }
     if (router?.pathname === '/referral-system') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-primary');
       setAdminClass('text-light');
+      setMyNftClass('text-light');
     }
     if (router?.pathname === '/admin') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-light');
       setAdminClass('text-primary');
+      setMyNftClass('text-light');
+    }
+    if (router?.pathname === '/user-nfts') {
+      setNftMintClass('text-light');
+      setReferralSystemClass('text-light');
+      setAdminClass('text-light');
+      setMyNftClass('text-primary');
     }
   }, [router?.pathname]);
 
@@ -93,7 +103,7 @@ const HeaderComponent = () => {
   };
 
   return (
-    <Header className="fixed-top nft-header" style={{zIndex: 100}}>
+    <Header className="fixed-top nft-header" style={{ zIndex: 100 }}>
       <div className="d-flex justify-content-between container">
         <div>
           {windowSize >= 1000 ? (
@@ -125,6 +135,17 @@ const HeaderComponent = () => {
               >
                 REFERRAL SYSTEM
               </Title>
+
+              {account && (
+                <Title
+                  level={5}
+                  className={`m-0 mx-2 ${myNftClass}`}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => router.push('/user-nfts')}
+                >
+                  MY NFTS
+                </Title>
+              )}
 
               {isAdmin && (
                 <Title
