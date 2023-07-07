@@ -3,12 +3,13 @@ import { Card, notification, Alert, Skeleton, Typography } from 'antd';
 import { Col, Row } from 'reactstrap';
 import { getUserNft } from '@/Blockchain/web3.service';
 import { useAccount } from 'wagmi';
+import UserNFTsLoading from '@/components/UserNFTsLoading';
 
 const UserNftPage = () => {
   const [userNfts, setUserNfts] = useState([]);
   const [isUserNftsLoading, setIsUserNftsLoading] = useState(false);
   const { address: account } = useAccount();
-  const { Title } = Typography;
+  const { Title, Text } = Typography;
 
   useEffect(() => {
     if (account) {
@@ -53,31 +54,7 @@ const UserNftPage = () => {
       )}
 
       {isUserNftsLoading && (
-        <Row>
-          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className="mt-3">
-            <Card className="nft-square-card nft-dark-card text-center">
-              <Skeleton.Image active={isUserNftsLoading} className="w-100" />
-            </Card>
-          </Col>
-
-          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className="mt-3">
-            <Card className="nft-square-card nft-dark-card text-center">
-              <Skeleton.Image active={isUserNftsLoading} className="w-100" />
-            </Card>
-          </Col>
-
-          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className="mt-3">
-            <Card className="nft-square-card nft-dark-card text-center">
-              <Skeleton.Image active={isUserNftsLoading} className="w-100" />
-            </Card>
-          </Col>
-
-          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className="mt-3">
-            <Card className="nft-square-card nft-dark-card text-center">
-              <Skeleton.Image active={isUserNftsLoading} className="w-100" />
-            </Card>
-          </Col>
-        </Row>
+        <UserNFTsLoading isUserNftsLoading={isUserNftsLoading} />
       )}
 
       {userNfts.length !== 0 && !isUserNftsLoading && (
@@ -94,7 +71,46 @@ const UserNftPage = () => {
               className="mt-3"
             >
               <Card className="nft-square-card nft-dark-card">
-                <img src={nft} alt="nft" className="w-100" />
+                <div className="text-center">
+                  <Title level={5}>
+                    <span className={`${nft?.type}-text text-uppercase`}>
+                      {nft.type}
+                    </span>
+                    <span>{` `}NFT</span>
+                  </Title>
+                </div>
+
+                <img
+                  src={nft.uri}
+                  alt="nft"
+                  className={`${nft?.type}-nft-bg w-100 p-4`}
+                />
+
+                <hr />
+                <div className="d-flex justify-content-between">
+                  <Text type="secondary">NFT ID</Text>
+                  <Text>{nft.nftId}</Text>
+                </div>
+                <hr />
+                <div className="d-flex justify-content-between">
+                  <Text type="secondary">Price</Text>
+                  <Text>{nft.price} BUSD</Text>
+                </div>
+                <hr />
+                <div className="d-flex justify-content-between">
+                  <Text type="secondary">Shared revenue</Text>
+                  <Text>{nft.sharedRevenue} %</Text>
+                </div>
+                <hr />
+                <div className="d-flex justify-content-between">
+                  <Text type="secondary">APR</Text>
+                  <Text>Up to {nft.apr} % / NFT</Text>
+                </div>
+                <hr />
+                <div className="d-flex justify-content-between">
+                  <Text type="secondary">Equity share</Text>
+                  <Text>{nft.equityShare} % / NFT</Text>
+                </div>
               </Card>
             </Col>
           ))}

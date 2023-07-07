@@ -58,7 +58,7 @@ export const getTierData = async (tierId) => {
 
 export const getUserNft = async (address) => {
   let userNftIdsArray = [];
-  let userNftURIsArray = [];
+  let userNftDataArray = [];
   try {
     const provider = new ethers.providers.JsonRpcProvider(
       process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
@@ -74,11 +74,57 @@ export const getUserNft = async (address) => {
 
     if (userNftIdsArray) {
       for (const element of userNftIdsArray) {
-        const userNftURI = await contractInstance.tokenURI(element);
-        userNftURIsArray.push(userNftURI);
+        const userNftDetails = await contractInstance.nftDetails(element);
+        const tierDetails = await contractInstance.tiersDetails(
+          userNftDetails?.category
+        );
+
+        const price = tierDetails.price.toString();
+        const priceFormattedString = utils.formatUnits(price, 18);
+        const priceFormattedNumber = Number(priceFormattedString); // NFT price as a number
+
+        const sharedRevenue = tierDetails.revenueShare.toString();
+        const sharedRevenueString = utils.formatUnits(sharedRevenue, 2);
+        const sharedRevenueNumber = Number(sharedRevenueString); // shared revenue percentage
+
+        const aprString = utils.formatUnits(sharedRevenue, 3);
+        const aprNumber = Number(aprString); // APR
+
+        const equityShare = tierDetails.equityShare.toString();
+        const equityShareString = utils.formatUnits(equityShare, 2);
+        const equityShareNumber = Number(equityShareString); // equity share percentage
+
+        let type = 'gold';
+
+        switch (userNftDetails.category) {
+          case 1:
+            type = 'silver';
+            break;
+          case 2:
+            type = 'bronze';
+            break;
+          case 3:
+            type = 'standard';
+            break;
+          default:
+            break;
+        }
+
+        let nftDataObject = {
+          uri: userNftDetails.uri,
+          type: type,
+          nftId: tierDetails.minId.toString(),
+          price: priceFormattedNumber,
+          sharedRevenue: sharedRevenueNumber,
+          apr: aprNumber,
+          equityShare: equityShareNumber,
+        };
+
+        userNftDataArray.push(nftDataObject);
       }
     }
-    return userNftURIsArray;
+    console.log('userNftDataArray: ', userNftDataArray);
+    return userNftDataArray;
   } catch (error) {
     let errorMessage =
       'Something went wrong while trying to fetch your NFTs. Please try again';
@@ -90,7 +136,7 @@ export const getUserNft = async (address) => {
     }
     throw errorMessage;
   }
-}
+};
 
 export const isNftPublic = async () => {
   try {
@@ -105,7 +151,7 @@ export const isNftPublic = async () => {
       provider
     );
     const isPublicResponse = await contractInstance.isPublic();
-    return isPublicResponse
+    return isPublicResponse;
   } catch (error) {
     let errorMessage =
       'Something went wrong while trying to fetch if NFT is public or not. Please try again';
@@ -117,7 +163,7 @@ export const isNftPublic = async () => {
     }
     throw errorMessage;
   }
-}
+};
 
 export const isWalletWhitelisted = async (address) => {
   try {
@@ -144,7 +190,7 @@ export const isWalletWhitelisted = async (address) => {
     }
     throw errorMessage;
   }
-}
+};
 
 export const mintNft = async (tierId, referralAddress, signer) => {
   try {
@@ -159,7 +205,10 @@ export const mintNft = async (tierId, referralAddress, signer) => {
       provider
     );
     const contractInstanceWithSigner = contractInstance.connect(signer);
-    const nftMintReceipt = await contractInstanceWithSigner.mintNft(tierId, referralAddress);
+    const nftMintReceipt = await contractInstanceWithSigner.mintNft(
+      tierId,
+      referralAddress
+    );
     const result = await nftMintReceipt.wait();
     return result;
   } catch (error) {
@@ -173,7 +222,7 @@ export const mintNft = async (tierId, referralAddress, signer) => {
     }
     throw errorMessage;
   }
-}
+};
 
 export const fetchAllowance = async (address) => {
   try {
@@ -188,7 +237,10 @@ export const fetchAllowance = async (address) => {
       provider
     );
     const spenderAddress = configs.nftContractAddress;
-    const allowanceResponse = await contractInstance.allowance(address, spenderAddress)
+    const allowanceResponse = await contractInstance.allowance(
+      address,
+      spenderAddress
+    );
     return allowanceResponse;
   } catch (error) {
     let errorMessage =
@@ -201,7 +253,7 @@ export const fetchAllowance = async (address) => {
     }
     throw errorMessage;
   }
-}
+};
 
 export const approveTokens = async (tokenAmount, signer) => {
   try {
@@ -228,7 +280,6 @@ export const approveTokens = async (tokenAmount, signer) => {
 
     const result = await approveTokenReceipt.wait();
     return result;
-
   } catch (error) {
     let errorMessage =
       'Something went wrong while trying to approve the token. Please try again';
@@ -240,4 +291,4 @@ export const approveTokens = async (tokenAmount, signer) => {
     }
     throw errorMessage;
   }
-}
+};

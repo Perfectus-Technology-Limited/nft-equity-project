@@ -183,6 +183,7 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
             alt="nft-img"
             className={`${tierData?.type}-nft-bg col-11 mt-4 mb-4`}
             autoPlay
+            playsInline
             muted
             loop
           />
@@ -194,6 +195,7 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
             alt="nft-img"
             className={`${tierData?.type}-nft-bg col-11 mt-4 mb-4`}
             autoPlay
+            playsInline
             muted
             loop
           />
@@ -205,6 +207,7 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
             alt="nft-img"
             className={`${tierData?.type}-nft-bg col-11 mt-4 mb-4`}
             autoPlay
+            playsInline
             muted
             loop
           />
@@ -216,6 +219,7 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
             alt="nft-img"
             className={`${tierData?.type}-nft-bg col-11 mt-4 mb-4`}
             autoPlay
+            playsInline
             muted
             loop
           />
