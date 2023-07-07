@@ -54,19 +54,25 @@ const UserNftPage = () => {
 
       {isUserNftsLoading && (
         <Row>
-          <Col xxl="4" xl="4" lg="4" md="6" sm="12" xs="12" className="mt-3">
+          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className="mt-3">
             <Card className="nft-square-card nft-dark-card text-center">
               <Skeleton.Image active={isUserNftsLoading} className="w-100" />
             </Card>
           </Col>
 
-          <Col xxl="4" xl="4" lg="4" md="6" sm="12" xs="12" className="mt-3">
+          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className="mt-3">
             <Card className="nft-square-card nft-dark-card text-center">
               <Skeleton.Image active={isUserNftsLoading} className="w-100" />
             </Card>
           </Col>
 
-          <Col xxl="4" xl="4" lg="4" md="6" sm="12" xs="12" className="mt-3">
+          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className="mt-3">
+            <Card className="nft-square-card nft-dark-card text-center">
+              <Skeleton.Image active={isUserNftsLoading} className="w-100" />
+            </Card>
+          </Col>
+
+          <Col xxl="3" xl="3" lg="3" md="6" sm="12" xs="12" className="mt-3">
             <Card className="nft-square-card nft-dark-card text-center">
               <Skeleton.Image active={isUserNftsLoading} className="w-100" />
             </Card>
@@ -78,17 +84,17 @@ const UserNftPage = () => {
         <Row>
           {userNfts.map((nft, index) => (
             <Col
-              xxl="4"
-              xl="4"
-              lg="4"
+              xxl="3"
+              xl="3"
+              lg="3"
               md="6"
               sm="12"
               xs="12"
               key={index}
               className="mt-3"
             >
-              <Card className="nft-square-card nft-dark-card text-center">
-                <img src={nft} alt="nft" />
+              <Card className="nft-square-card nft-dark-card">
+                <img src={nft} alt="nft" className="w-100" />
               </Card>
             </Col>
           ))}
