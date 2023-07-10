@@ -60,19 +60,23 @@ body {
 }
 
 .standard-nft-bg {
-  filter: drop-shadow(0 0px 50px #2dc2b1);
+  /* filter: drop-shadow(0 0px 50px #2dc2b1); */
+  border: 2px solid #2dc2b1;
 }
 
 .bronze-nft-bg {
-  filter: drop-shadow(0 0px 50px #cd7f32);
+  /* filter: drop-shadow(0 0px 50px #cd7f32); */
+  border: 2px solid #cd7f32;
 }
 
 .silver-nft-bg {
-  filter: drop-shadow(0 0px 50px #c0c0c0);
+  /* filter: drop-shadow(0 0px 50px #c0c0c0); */
+  border: 2px solid #c0c0c0;
 }
 
 .gold-nft-bg {
-  filter: drop-shadow(0 0px 50px #ffd700);
+  /* filter: drop-shadow(0 0px 50px #ffd700); */
+  border: 2px solid #ffd700;
 }
 
 .standard-nft-btn {
