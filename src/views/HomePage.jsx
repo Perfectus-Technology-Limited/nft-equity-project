@@ -4,6 +4,7 @@ import RentalRevenueCal from '@/components/RentalRevenueCal';
 import NftCard from '@/components/NftCard';
 import { Col, Row } from 'reactstrap';
 import ReferralLink from '@/components/ReferralLink';
+import ReferralRewards from '@/components/ReferralRewards';
 import { motion } from 'framer-motion';
 import { container, item } from '@/utils/FramerMotion';
 
@@ -75,7 +76,7 @@ const HomePage = () => {
         <motion.div variants={item}>
           <Row className="mt-5">
             <Col>
-              <ReferralLink />
+              <ReferralRewards />
             </Col>
           </Row>
         </motion.div>

@@ -41,7 +41,9 @@ const ReferralRewards = () => {
 
         <div className="mt-3">
           <Text type="secondary" className="text-uppercase">
-            Receive a 10% share when SOMEONE utilize your referral link.
+            Receive a 0.5% share for 1-5 direct referrals, 0.75% share for 5-10
+            direct referrals, 1% share for 10+ direct referrals. Receive a 0.35% share
+            for your level 2 referrals & 0.25% share for your level 3 referrals.
           </Text>
         </div>
 
@@ -86,7 +88,9 @@ const ReferralRewards = () => {
                 className="mt-3"
               >
                 <Card hoverable>
-                  <Title level={5} className="m-0">$560</Title>
+                  <Title level={5} className="m-0">
+                    $560
+                  </Title>
                   <Text type="secondary">
                     Your total rewards from referrals
                   </Text>
@@ -103,10 +107,10 @@ const ReferralRewards = () => {
                 className="mt-3"
               >
                 <Card hoverable>
-                <Title level={5} className="m-0">23</Title>
-                  <Text type="secondary">
-                    Your referrals
-                  </Text>
+                  <Title level={5} className="m-0">
+                    23
+                  </Title>
+                  <Text type="secondary">Your referrals</Text>
                 </Card>
               </Col>
             </Row>
