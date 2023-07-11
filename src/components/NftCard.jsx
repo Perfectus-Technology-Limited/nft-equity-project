@@ -20,13 +20,16 @@ const nftProperties = {
   equityShare: 0,
 };
 
-const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
+const NftCard = ({ tierData }) => {
   const { address } = useAccount();
   const { data: signer } = useSigner();
   const { Title, Text } = Typography;
   const [count, setCount] = useState(1);
   const [nftData, setNftData] = useState(nftProperties);
   const [isNftDataLoading, setIsNftDataLoading] = useState(false);
+
+  const [isAllowanceLoading, setIsAllowanceLoading] = useState(false);
+  const [allowance, setAllowance] = useState(0);
 
   const router = useRouter();
   const { ref } = router.query;
@@ -62,6 +65,27 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
     fetchTierData();
     isNFTPublic();
   }, [tierData]);
+
+  useEffect(() => {
+    if (address) {
+      getAllowance();
+    }
+  }, [address]);
+
+  const getAllowance = async () => {
+    try {
+      setIsAllowanceLoading(true);
+      const result = await fetchAllowance(address);
+      const allowance = result.toString();
+      const allowanceFormattedString = utils.formatUnits(allowance, 18);
+      const allowanceFormattedNumber = Number(allowanceFormattedString);
+      setAllowance(allowanceFormattedNumber);
+      setIsAllowanceLoading(false);
+    } catch (error) {
+      setIsAllowanceLoading(false);
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (isPublic || isWhitelisted) {
@@ -343,11 +367,11 @@ const NftCard = ({ tierData, allowance, getAllowance, isAllowanceLoading }) => {
 
         <div className="mt-4 count-container">
           <div className="d-flex justify-content-between">
-            <Button className="count-button" onClick={handleDecrease}>
+            <Button className="count-button" onClick={handleDecrease} disabled>
               -
             </Button>
             <Text className="my-auto">{count}</Text>
-            <Button className="count-button" onClick={handleIncrease}>
+            <Button className="count-button" onClick={handleIncrease} disabled>
               +
             </Button>
           </div>

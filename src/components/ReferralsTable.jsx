@@ -1,57 +1,66 @@
-import { Card, Typography, Table, Alert } from 'antd';
-import React from 'react';
+import { Card, Typography, Table, Alert, Pagination } from 'antd';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useAccount } from 'wagmi';
+import axios from 'axios';
 
 const ReferralsTable = () => {
   const { Title, Text } = Typography;
   const { address } = useAccount();
+  const [referralData, setReferralData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageLimit, setPageLimit] = useState(10);
+  const [totalReferralData, setTotalReferralData] = useState(0);
 
-  const dataSource = [
-    {
-      id: 1,
-      wallet_address: '0xad09c8A0CC1bA773FED5dabb36f32Abe3668BFE8',
-      referral_level: 1,
-      amount: '$12,840',
-      rewards: '0.5%',
-    },
-    {
-      id: 2,
-      wallet_address: '0x7caF0403937CCb030d5Fb0E42Ef00f682309e973',
-      referral_level: 3,
-      amount: '$12,000',
-      rewards: '0.25%',
-    },
-    {
-      id: 3,
-      wallet_address: '0xad09c8A0CC1bA773FED5dabb36f32Abe3668BFE8',
-      referral_level: 2,
-      amount: '$10,840',
-      rewards: '0.35%',
-    },
-    {
-      id: 4,
-      wallet_address: '0xad09c8A0CC1bA773FED5dabb36f32Abe3668BFE8',
-      referral_level: 1,
-      amount: '$14,640',
-      rewards: '0.5%',
-    },
-  ];
+  useEffect(() => {
+    if (address) {
+      fetchReferralData();
+    }
+  }, [address, currentPage, pageLimit]);
+
+  const fetchReferralData = async () => {
+    try {
+      setLoading(true);
+      let config = {
+        method: 'get',
+        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/referal-income-details/get-by-user/${address}?page=${currentPage}&limit=${pageLimit}`,
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+        },
+      };
+      const response = await axios(config);
+      if (response.status === 200) {
+        const payload = response.data.payload;
+        if (payload) {
+          const total = payload.meta.totalItems;
+          setTotalReferralData(total);
+          setReferralData(payload.items);
+        } else {
+          setPoolDataList([]);
+        }
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
   const columns = [
     {
       title: <div className="text-center text-light">Wallet Address</div>,
-      dataIndex: 'wallet_address',
+      dataIndex: 'fromAddress',
       key: 'id',
       render: (text) => (
-        <div className="text-center">
+        <div className="text-center text-nowrap">
           <Text>{text}</Text>
         </div>
       ),
     },
     {
       title: <div className="text-center text-light">Referral Level</div>,
-      dataIndex: 'referral_level',
+      dataIndex: 'level',
       key: 'id',
       render: (text) => (
         <div className="text-center">
@@ -64,22 +73,31 @@ const ReferralsTable = () => {
       dataIndex: 'amount',
       key: 'id',
       render: (text) => (
-        <div className="text-center">
-          <Text>{text}</Text>
+        <div className="text-center text-nowrap">
+          <Text>{text} BUSD</Text>
         </div>
       ),
     },
-    {
-      title: <div className="text-center text-light">Rewards</div>,
-      dataIndex: 'rewards',
-      key: 'id',
-      render: (text) => (
-        <div className="text-center">
-          <Text>{text}</Text>
-        </div>
-      ),
-    },
+    // {
+    //   title: <div className="text-center text-light">Rewards</div>,
+    //   dataIndex: 'rewards',
+    //   key: 'id',
+    //   render: (text) => (
+    //     <div className="text-center">
+    //       <Text>{text}</Text>
+    //     </div>
+    //   ),
+    // },
   ];
+
+  const onChange = (page, pageSize) => {
+    if (page !== currentPage) {
+      setCurrentPage(page);
+    }
+    if (pageSize) {
+      setPageLimit(pageSize);
+    }
+  };
 
   return (
     <Card className="nft-square-card nft-dark-card">
@@ -91,24 +109,42 @@ const ReferralsTable = () => {
 
         <div className="mt-3">
           {address ? (
-            <Table
-              dataSource={dataSource}
-              columns={columns}
-              rowKey="id"
-              rowClassName={(record, index) =>
-                index % 2 === 1 ? 'table-row-light' : ''
-              }
-            />
-          ) : (
-              <Alert
-                message={
-                  <Text className="text-uppercase small" type="warning">
-                    Please connect your wallet to see your referrals
-                  </Text>
+            <>
+              <Table
+                dataSource={referralData}
+                columns={columns}
+                rowKey="id"
+                rowClassName={(record, index) =>
+                  index % 2 === 1 ? 'table-row-light' : ''
                 }
-                type="warning"
-                showIcon
+                loading={loading}
+                pagination={false}
+                className="table-responsive"
               />
+
+              <div className="d-flex justify-content-center mt-3">
+                <Pagination
+                  total={totalReferralData}
+                  showTotal={(total, range) =>
+                    `${range[0]}-${range[1]} of ${totalReferralData} items`
+                  }
+                  defaultPageSize={pageLimit}
+                  pageSizeOptions={['10', '20', '30', '50', '100']}
+                  current={currentPage}
+                  onChange={onChange}
+                />
+              </div>
+            </>
+          ) : (
+            <Alert
+              message={
+                <Text className="text-uppercase small" type="warning">
+                  Please connect your wallet to see your referrals
+                </Text>
+              }
+              type="warning"
+              showIcon
+            />
           )}
         </div>
       </div>
