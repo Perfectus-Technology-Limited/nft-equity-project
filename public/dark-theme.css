@@ -256,7 +256,7 @@ body {
   position: absolute;
   width: 200%;
   height: 200%;
-  background-image: conic-gradient(#2dc2b1 20deg, transparent 120deg);
+  background-image: conic-gradient(#2dc2b1 45deg, transparent 45deg);
   animation: rotate 5s linear infinite;
   z-index: 0;
 }
@@ -266,7 +266,7 @@ body {
   position: absolute;
   width: 200%;
   height: 200%;
-  background-image: conic-gradient(#cd7f32 20deg, transparent 120deg);
+  background-image: conic-gradient(#cd7f32 45deg, transparent 45deg);
   animation: rotate 5s linear infinite;
   z-index: 0;
 }
@@ -276,7 +276,7 @@ body {
   position: absolute;
   width: 200%;
   height: 200%;
-  background-image: conic-gradient(#c0c0c0 20deg, transparent 120deg);
+  background-image: conic-gradient(#c0c0c0 45deg, transparent 45deg);
   animation: rotate 5s linear infinite;
   z-index: 0;
 }
@@ -286,7 +286,7 @@ body {
   position: absolute;
   width: 200%;
   height: 200%;
-  background-image: conic-gradient(#ffd700 20deg, transparent 120deg);
+  background-image: conic-gradient(#ffd700 45deg, transparent 45deg);
   animation: rotate 5s linear infinite;
   z-index: 0;
 }
