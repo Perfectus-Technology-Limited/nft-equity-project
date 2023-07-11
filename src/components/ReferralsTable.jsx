@@ -30,7 +30,6 @@ const ReferralsTable = () => {
         },
       };
       const response = await axios(config);
-      console.log('response: ', response);
       if (response.status === 200) {
         const payload = response.data.payload;
         if (payload) {
