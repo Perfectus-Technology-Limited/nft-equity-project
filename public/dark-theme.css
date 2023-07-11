@@ -1,103 +1,103 @@
 body {
-  background: #0F1113 !important;
+  background: #0f1113 !important;
 }
 
 .nft-header {
-  background: #181C1F;
+  background: #181c1f;
   border-bottom: 1px solid #313135;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.4);
 }
 
 .text-primary {
-  color: #01B47E !important;
+  color: #01b47e !important;
 }
 
 .footer-bg {
-  background: #0F1113;
+  background: #0f1113;
 }
 
 .nft-dark-card {
-  background: #181C1F;
+  background: #181c1f;
 }
 
-.standard-nft-card{
+.standard-nft-card {
   position: relative;
-  background: #181C1F;
+  background: #181c1f;
   border: none !important;
   border-radius: 0 !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; 
+  overflow: hidden;
   text-align: center;
 }
 
-.standard-nft-card .main-div{
+.standard-nft-card .main-div {
   border-radius: 0 !important;
-  background: #181C1F;
+  background: #181c1f;
   z-index: 1;
   width: 100%;
 }
 
-.bronze-nft-card{
+.bronze-nft-card {
   position: relative;
-  background: #181C1F;
+  background: #181c1f;
   border: none !important;
   border-radius: 0 !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; 
+  overflow: hidden;
   text-align: center;
 }
 
-.bronze-nft-card .main-div{
+.bronze-nft-card .main-div {
   border-radius: 0 !important;
-  background: #181C1F;
+  background: #181c1f;
   z-index: 1;
   width: 100%;
 }
 
-.silver-nft-card{
+.silver-nft-card {
   position: relative;
-  background: #181C1F;
+  background: #181c1f;
   border: none !important;
   border-radius: 0 !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; 
+  overflow: hidden;
   text-align: center;
 }
 
-.silver-nft-card .main-div{
+.silver-nft-card .main-div {
   border-radius: 0 !important;
-  background: #181C1F;
+  background: #181c1f;
   z-index: 1;
   width: 100%;
 }
 
-.gold-nft-card{
+.gold-nft-card {
   position: relative;
-  background: #181C1F;
+  background: #181c1f;
   border: none !important;
   border-radius: 0 !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; 
+  overflow: hidden;
   text-align: center;
 }
 
-.gold-nft-card .main-div{
+.gold-nft-card .main-div {
   border-radius: 0 !important;
-  background: #181C1F;
+  background: #181c1f;
   z-index: 1;
   width: 100%;
 }
 
 .count-container {
-  background: #22282C;
+  background: #22282c;
   border-radius: 72.5713px;
 }
 
@@ -243,74 +243,56 @@ body {
   }
 } */
 
-.ant-table-thead > tr >th{
-  background: #22282C !important;
+.ant-table-thead > tr > th {
+  background: #22282c !important;
 }
 
 .table-row-light {
-  background: #22282C !important;
+  background: #22282c !important;
 }
 
 .standard-nft-card::after {
   content: '';
-	position: absolute;
-	left: -2px;
-	top: -2px;
-	background: linear-gradient(45deg, transparent, transparent, transparent, transparent, #8df2e7, #2dc2b1, #039181);
-	background-size: 400%;
-	width: calc(100% + 4px);
-	height: calc(100% + 4px);
-	animation: steam 20s linear infinite;
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(#2dc2b1 20deg, transparent 120deg);
+  animation: rotate 5s linear infinite;
   z-index: 0;
 }
 
 .bronze-nft-card::after {
   content: '';
-	position: absolute;
-	left: -2px;
-	top: -2px;
-	background: linear-gradient(45deg, transparent, transparent, transparent, transparent, #f0a151, #cd7f32, #5c2e01);
-	background-size: 400%;
-	width: calc(100% + 4px);
-	height: calc(100% + 4px);
-	animation: steam 20s linear infinite;
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(#cd7f32 20deg, transparent 120deg);
+  animation: rotate 5s linear infinite;
   z-index: 0;
 }
 
 .silver-nft-card::after {
   content: '';
-	position: absolute;
-	left: -2px;
-	top: -2px;
-	background: linear-gradient(45deg, transparent, transparent, transparent, transparent, #f5f2f2, #c0c0c0, #4f4e4e);
-	background-size: 400%;
-	width: calc(100% + 4px);
-	height: calc(100% + 4px);
-	animation: steam 20s linear infinite;
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(#c0c0c0 20deg, transparent 120deg);
+  animation: rotate 5s linear infinite;
   z-index: 0;
 }
 
 .gold-nft-card::after {
   content: '';
-	position: absolute;
-	left: -2px;
-	top: -2px;
-	background: linear-gradient(45deg, transparent, transparent, transparent, transparent, #fce351, #ffd700, #c2a504);
-	background-size: 400%;
-	width: calc(100% + 4px);
-	height: calc(100% + 4px);
-	animation: steam 20s linear infinite;
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(#ffd700 20deg, transparent 120deg);
+  animation: rotate 5s linear infinite;
   z-index: 0;
 }
 
-@keyframes steam {
-	0% {
-		background-position: 0 0;
-	}
-	50% {
-		background-position: 400% 0;
-	}
-	100% {
-		background-position: 0 0;
-	}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
 }

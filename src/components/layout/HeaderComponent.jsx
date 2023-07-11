@@ -133,7 +133,7 @@ const HeaderComponent = () => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => router.push('/referral-system')}
               >
-                REFERRAL SYSTEM
+                PARTNER PROGRAM
               </Title>
 
               {account && (
