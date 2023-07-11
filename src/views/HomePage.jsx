@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropertyDetailsCard from '@/components/PropertyDetailsCard';
 import RentalRevenueCal from '@/components/RentalRevenueCal';
 import NftCard from '@/components/NftCard';
@@ -6,36 +6,8 @@ import { Col, Row } from 'reactstrap';
 import ReferralLink from '@/components/ReferralLink';
 import { motion } from 'framer-motion';
 import { container, item } from '@/utils/FramerMotion';
-import { fetchAllowance } from '@/Blockchain/web3.service';
-import { useAccount } from 'wagmi';
-import { utils } from 'ethers';
 
 const HomePage = () => {
-  const { address } = useAccount();
-
-  const [isAllowanceLoading, setIsAllowanceLoading] = useState(false);
-  const [allowance, setAllowance] = useState(0);
-
-  useEffect(() => {
-    if (address) {
-      getAllowance();
-    }
-  }, [address]);
-
-  const getAllowance = async () => {
-    try {
-      setIsAllowanceLoading(true);
-      const result = await fetchAllowance(address);
-      const allowance = result.toString();
-      const allowanceFormattedString = utils.formatUnits(allowance, 18);
-      const allowanceFormattedNumber = Number(allowanceFormattedString);
-      setAllowance(allowanceFormattedNumber);
-      setIsAllowanceLoading(false);
-    } catch (error) {
-      setIsAllowanceLoading(false);
-      console.log(error);
-    }
-  };
 
   const nftData = [
     {
@@ -94,9 +66,6 @@ const HomePage = () => {
               >
                 <NftCard
                   tierData={nft}
-                  getAllowance={getAllowance}
-                  isAllowanceLoading={isAllowanceLoading}
-                  allowance={allowance}
                 />
               </Col>
             ))}

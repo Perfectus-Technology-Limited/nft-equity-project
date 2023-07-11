@@ -113,7 +113,7 @@ export const getUserNft = async (address) => {
         let nftDataObject = {
           uri: userNftDetails.uri,
           type: type,
-          nftId: tierDetails.minId.toString(),
+          nftId: element.toString(),
           price: priceFormattedNumber,
           sharedRevenue: sharedRevenueNumber,
           apr: aprNumber,
