@@ -105,10 +105,20 @@ const ReferralRewards = () => {
 
         <div className="mt-3">
           <Text type="secondary" className="text-uppercase">
-            Receive a 0.5% share for 1-5 direct referrals, 0.75% share for 5-10
-            direct referrals, 1% share for 10+ direct referrals. Receive a 0.35% share
-            for your level 2 referrals & 0.25% share for your level 3 referrals.
-          </Text>
+            RECEIVE A 0.5% SHARE FOR 1-5 DIRECT REFERRALS
+          </Text><br />
+          <Text type="secondary" className="text-uppercase">
+          0.75% SHARE FOR 5-10 DIRECT REFERRALS
+          </Text><br />
+          <Text type="secondary" className="text-uppercase">
+          1% SHARE FOR 10+ DIRECT REFERRALS
+          </Text><br />
+          <Text type="secondary" className="text-uppercase">
+          RECEIVE A 0.35% SHARE FOR YOUR LEVEL 2 REFERRALS
+          </Text><br />
+          <Text type="secondary" className="text-uppercase">
+          RECEIVE A 0.25% SHARE FOR YOUR LEVEL 3 REFERRALS
+          </Text><br />
         </div>
 
         <div className="mt-2">

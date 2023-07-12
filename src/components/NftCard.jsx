@@ -1,4 +1,4 @@
-import { Button, Spin, Tooltip, Typography, notification } from 'antd';
+import { Button, Spin, Tooltip, Typography, notification, Divider } from 'antd';
 import React, { useState, useEffect } from 'react';
 import {
   getTierData,
@@ -205,7 +205,7 @@ const NftCard = ({ tierData }) => {
           <video
             src="/Gold.webm"
             alt="nft-img"
-            className={`${tierData?.type}-nft-bg col-11 mt-4 mb-4`}
+            className={`${tierData?.type}-nft-bg col-lg-11 col-9 mt-3 mb-3`}
             autoPlay
             playsInline
             muted
@@ -217,7 +217,7 @@ const NftCard = ({ tierData }) => {
           <video
             src="/Silver.webm"
             alt="nft-img"
-            className={`${tierData?.type}-nft-bg col-11 mt-4 mb-4`}
+            className={`${tierData?.type}-nft-bg col-lg-11 col-9 mt-3 mb-3`}
             autoPlay
             playsInline
             muted
@@ -229,7 +229,7 @@ const NftCard = ({ tierData }) => {
           <video
             src="/Bronze.webm"
             alt="nft-img"
-            className={`${tierData?.type}-nft-bg col-11 mt-4 mb-4`}
+            className={`${tierData?.type}-nft-bg col-lg-11 col-9 mt-3 mb-3`}
             autoPlay
             playsInline
             muted
@@ -241,7 +241,7 @@ const NftCard = ({ tierData }) => {
           <video
             src="/Standard.webm"
             alt="nft-img"
-            className={`${tierData?.type}-nft-bg col-11 mt-4 mb-4`}
+            className={`${tierData?.type}-nft-bg col-lg-11 col-9 mt-3 mb-3`}
             autoPlay
             playsInline
             muted
@@ -346,6 +346,7 @@ const NftCard = ({ tierData }) => {
           <span>{` `}NFT</span>
         </Title>
 
+        {/* get nft accrding to nft type */}
         {getNFT()}
 
         <div>
@@ -377,7 +378,7 @@ const NftCard = ({ tierData }) => {
           </div>
         </div>
 
-        <hr />
+        <hr className='mt-1' />
         <div className="d-flex justify-content-between">
           <Text type="secondary">Price</Text>
           <Text>
@@ -385,7 +386,7 @@ const NftCard = ({ tierData }) => {
           </Text>
         </div>
 
-        <hr />
+        <hr className='mt-1' />
         <div className="d-flex justify-content-between">
           <Text type="secondary">Shared revenue</Text>
           <Text>
@@ -393,7 +394,7 @@ const NftCard = ({ tierData }) => {
           </Text>
         </div>
 
-        <hr />
+        <hr className='mt-1' />
         <div className="d-flex justify-content-between">
           <Text type="secondary">APR</Text>
           <Text>
@@ -402,7 +403,7 @@ const NftCard = ({ tierData }) => {
           </Text>
         </div>
 
-        <hr />
+        <hr className='mt-1' />
         <div className="d-flex justify-content-between">
           <Text type="secondary">Equity share</Text>
           <Text>
@@ -411,7 +412,7 @@ const NftCard = ({ tierData }) => {
           </Text>
         </div>
 
-        <hr />
+        <hr className='mt-1' />
         <div className="d-flex justify-content-between">
           <Text type="secondary">Total</Text>
           <Text>
@@ -420,7 +421,7 @@ const NftCard = ({ tierData }) => {
           </Text>
         </div>
 
-        <hr />
+        <hr className='mt-1' />
         <div className="d-flex justify-content-around">
           <Button
             className={`${tierData?.type}-nft-btn ${approveButtonDisabled ? 'text-secondary': 'text-dark'} text-uppercase`}
