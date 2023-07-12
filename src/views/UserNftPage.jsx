@@ -86,27 +86,27 @@ const UserNftPage = () => {
                   className={`${nft?.type}-nft-bg w-100 p-4`}
                 />
 
-                <hr />
+                <hr className='mt-1' />
                 <div className="d-flex justify-content-between">
                   <Text type="secondary">NFT ID</Text>
                   <Text>{nft.nftId}</Text>
                 </div>
-                <hr />
+                <hr className='mt-1' />
                 <div className="d-flex justify-content-between">
                   <Text type="secondary">Price</Text>
                   <Text>{nft.price} BUSD</Text>
                 </div>
-                <hr />
+                <hr className='mt-1' />
                 <div className="d-flex justify-content-between">
                   <Text type="secondary">Shared revenue</Text>
                   <Text>{nft.sharedRevenue} %</Text>
                 </div>
-                <hr />
+                <hr className='mt-1' />
                 <div className="d-flex justify-content-between">
                   <Text type="secondary">APR</Text>
                   <Text>Up to {nft.apr} % / NFT</Text>
                 </div>
-                <hr />
+                <hr className='mt-1' />
                 <div className="d-flex justify-content-between">
                   <Text type="secondary">Equity share</Text>
                   <Text>{nft.equityShare} % / NFT</Text>

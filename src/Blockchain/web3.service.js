@@ -123,7 +123,6 @@ export const getUserNft = async (address) => {
         userNftDataArray.push(nftDataObject);
       }
     }
-    console.log('userNftDataArray: ', userNftDataArray);
     return userNftDataArray;
   } catch (error) {
     let errorMessage =
