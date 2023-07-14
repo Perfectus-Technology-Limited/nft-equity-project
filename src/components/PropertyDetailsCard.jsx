@@ -116,7 +116,7 @@ const PropertyDetailsCard = () => {
               <Col xxl="6" xl="6" lg="6" md="6" sm="6" xs="6" className="mt-4">
                 <Text className="fw-lighter">Price</Text>
                 <Title level={5} className="m-0 fw-lighter" type="secondary">
-                  $320,000
+                  $350,000
                 </Title>
               </Col>
               <Col xxl="6" xl="6" lg="6" md="6" sm="6" xs="6" className="mt-4">

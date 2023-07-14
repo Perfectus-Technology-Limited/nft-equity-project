@@ -34,6 +34,75 @@ const UserNftPage = () => {
     }
   };
 
+  // this function will return NFT webm for each tier
+  const getNFT = (type) => {
+    switch (type) {
+      case 'gold':
+        return (
+          <video
+            src="/Gold.webm"
+            alt="nft-img"
+            className={`${type}-nft-bg w-100 mt-3 mb-3`}
+            autoPlay
+            playsInline
+            muted
+            loop
+          />
+        );
+      case 'silver':
+        return (
+          <video
+            src="/Silver.webm"
+            alt="nft-img"
+            className={`${type}-nft-bg w-100 mt-3 mb-3`}
+            autoPlay
+            playsInline
+            muted
+            loop
+          />
+        );
+      case 'bronze':
+        return (
+          <video
+            src="/Bronze.webm"
+            alt="nft-img"
+            className={`${type}-nft-bg w-100 mt-3 mb-3`}
+            autoPlay
+            playsInline
+            muted
+            loop
+          />
+        );
+      case 'standard':
+        return (
+          <video
+            src="/Standard.webm"
+            alt="nft-img"
+            className={`${type}-nft-bg w-100 mt-3 mb-3`}
+            autoPlay
+            playsInline
+            muted
+            loop
+          />
+        );
+      default:
+        break;
+    }
+  };
+
+  const getAPR = (type) => {
+    switch (type) {
+      case 'gold':
+        return '23%';
+      case 'silver':
+        return '13%';
+      case 'bronze':
+        return '10%';
+      default:
+        return '6%';
+    }
+  }
+
   return (
     <div className="mt-5 mb-5">
       <div className="text-center mb-4">
@@ -80,11 +149,12 @@ const UserNftPage = () => {
                   </Title>
                 </div>
 
-                <img
+                {/* <img
                   src={nft.uri}
                   alt="nft"
                   className={`${nft?.type}-nft-bg w-100 p-4`}
-                />
+                /> */}
+                {getNFT(nft?.type)}
 
                 <hr className='mt-1' />
                 <div className="d-flex justify-content-between">
@@ -102,9 +172,13 @@ const UserNftPage = () => {
                   <Text>{nft.sharedRevenue} %</Text>
                 </div>
                 <hr className='mt-1' />
-                <div className="d-flex justify-content-between">
+                {/* <div className="d-flex justify-content-between">
                   <Text type="secondary">APR</Text>
                   <Text>Up to {nft.apr} % / NFT</Text>
+                </div> */}
+                <div className="d-flex justify-content-between">
+                  <Text type="secondary">APR</Text>
+                  <Text>Up to {getAPR(nft?.type)} / NFT</Text>
                 </div>
                 <hr className='mt-1' />
                 <div className="d-flex justify-content-between">
