@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Typography } from 'antd';
+import { Card, Typography, notification, Spin } from 'antd';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { openModal } from '@/redux/viewFullPropertySlice';
@@ -23,11 +23,14 @@ import { PiTelevisionSimpleLight } from 'react-icons/pi';
 import { TbGardenCart, TbAirConditioning } from 'react-icons/tb';
 import { GiHomeGarage, GiGate } from 'react-icons/gi';
 import { BsBuildingGear } from 'react-icons/bs';
+import { getPropertyPrice } from '@/Blockchain/web3.service';
 
 const PropertyDetailsCard = () => {
   const { Title, Text } = Typography;
   const dispatch = useDispatch();
   const [importedImages, setImportedImages] = useState([]);
+  const [propertyPriceLoading, setPropertyPriceLoading] = useState(false);
+  const [propertyPrice, setPropertyPrice] = useState('N/A');
 
   useEffect(() => {
     const importImages = async () => {
@@ -38,6 +41,27 @@ const PropertyDetailsCard = () => {
 
     importImages();
   }, []);
+
+  useEffect(() => {
+    fetchPropertyPrice()
+  }, [])
+
+  const fetchPropertyPrice = async () => {
+    try {
+      setPropertyPriceLoading(true);
+      const price = await getPropertyPrice();
+      setPropertyPrice(Number(price));
+      setPropertyPriceLoading(false);
+    } catch (error) {
+      setPropertyPriceLoading(true);
+      setPropertyPrice('N/A');
+      notification['error']({
+        key: 'property_price',
+        message: 'Oops!',
+        description: error,
+      });
+    }
+  }
 
   return (
     <>
@@ -116,7 +140,7 @@ const PropertyDetailsCard = () => {
               <Col xxl="6" xl="6" lg="6" md="6" sm="6" xs="6" className="mt-4">
                 <Text className="fw-lighter">Price</Text>
                 <Title level={5} className="m-0 fw-lighter" type="secondary">
-                  $350,000
+                  $ { propertyPriceLoading ? <Spin size="small" /> : propertyPrice}
                 </Title>
               </Col>
               <Col xxl="6" xl="6" lg="6" md="6" sm="6" xs="6" className="mt-4">

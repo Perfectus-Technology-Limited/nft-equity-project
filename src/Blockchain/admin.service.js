@@ -18,7 +18,8 @@ export const getNFTContractABIWriteFunctions = () => {
       item.name !== 'setApprovalForAll' &&
       item.name !== 'transferFrom' &&
       item.name !== 'whitelistUsers' &&
-      item.name !== 'withdrawBusd'
+      item.name !== 'withdrawBusd' &&
+      item.name !== 'changePropertyPrice'
   );
 
   return writeFunctionList;
@@ -176,3 +177,34 @@ export const changeTierDetails = async (
     throw errorMessage;
   }
 };
+
+export const changePropertyPrice = async (signer, price) => {
+  try {
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
+    const contractAddress = configs.nftContractAddress;
+    const contractABI = JSON.parse(configs.nftContractABI);
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const contractInstanceWithSigner = contractInstance.connect(signer);
+    const priceFormatted = utils.parseUnits(price.toString(), 18);
+    const receipt = await contractInstanceWithSigner.changePropertyPrice(
+      priceFormatted
+    );
+    const result = await receipt.wait();
+    return result;
+  } catch (error) {
+    let errorMessage = 'Something went wrong while trying to write. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+}
