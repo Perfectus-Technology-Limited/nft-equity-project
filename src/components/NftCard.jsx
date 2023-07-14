@@ -336,6 +336,19 @@ const NftCard = ({ tierData }) => {
     }
   };
 
+  const getAPR = (type) => {
+    switch (type) {
+      case 'gold':
+        return '23%';
+      case 'silver':
+        return '13%';
+      case 'bronze':
+        return '10%';
+      default:
+        return '6%';
+    }
+  }
+
   return (
     <div className={`${tierData?.type}-nft-card`}>
       <div className="main-div p-3" style={{ margin: '2px' }}>
@@ -395,10 +408,18 @@ const NftCard = ({ tierData }) => {
         </div>
 
         <hr className='mt-1' />
-        <div className="d-flex justify-content-between">
+        {/* <div className="d-flex justify-content-between">
           <Text type="secondary">APR</Text>
           <Text>
             Up to {isNftDataLoading ? <Spin size="small" /> : nftData.APR} % /
+            NFT
+          </Text>
+        </div> */}
+
+        <div className="d-flex justify-content-between">
+          <Text type="secondary">APR</Text>
+          <Text>
+            Up to {isNftDataLoading ? <Spin size="small" /> : getAPR(tierData?.type)} /
             NFT
           </Text>
         </div>
