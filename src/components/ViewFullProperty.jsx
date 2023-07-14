@@ -5,6 +5,7 @@ import { closeModal } from '@/redux/viewFullPropertySlice';
 import Image from 'next/image';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
+import ImageLoader from '@/utils/ImageLoader';
 
 
 const ViewFullProperty = () => {
@@ -14,19 +15,7 @@ const ViewFullProperty = () => {
 
   useEffect(() => {
     const importImages = async () => {
-      const imageNames = Array.from(
-        { length: 12 },
-        (_, index) => `batu-bolong-gallery${index + 1}.jpg`
-      );
-
-      const importedImages = await Promise.all(
-        imageNames.map(async (imageName) => {
-          const { default: image } = await import(
-            `../assets/BatuBolongVilla/${imageName}`
-          );
-          return image;
-        })
-      );
+      const importedImages = await ImageLoader()
 
       setImportedImages(importedImages);
     };
@@ -42,9 +31,9 @@ const ViewFullProperty = () => {
       footer={false}
       width={'100vh'}
     >
-      <Carousel dynamicHeight={true} autoPlay={true} showThumbs={true}>
+      <Carousel dynamicHeight={true} autoPlay={true} showThumbs={true} infiniteLoop={true}>
         {importedImages.map((image, index) => (
-          <div>
+          <div key={index}>
             <Image key={index} src={image} alt={`Image ${index + 1}`} className="property-image" />
           </div>
         ))}

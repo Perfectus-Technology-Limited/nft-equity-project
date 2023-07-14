@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ConfigProvider, theme, Layout } from 'antd';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
-import { useEffect } from 'react';
 import HeaderComponent from '@/components/layout/HeaderComponent';
 import FooterComponent from '@/components/layout/FooterComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTheme } from '@/redux/themeSlice';
+import { useRouter } from 'next/router';
+import { LoadingIcon } from '@/utils/LoadingIcon';
+import { Spin } from 'antd';
 
 const LayoutView = ({ children }) => {
   const { Content } = Layout;
   const { themeState } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   // light/dark themes related styles files
   const themes = {
@@ -23,6 +28,31 @@ const LayoutView = ({ children }) => {
       const currentTheme = localStorage.getItem('nft_equity_theme') || 'dark'; // get the user theme state from localStorage
       dispatch(setTheme(currentTheme));
     }
+  }, []);
+
+  useEffect(() => {
+    if (!themeState) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [themeState]);
+
+  useEffect(() => {
+    const handleComplete = () => setLoading(false);
+
+    router.events.on('routeChangeStart', () => setLoading(true));
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleComplete);
+
+    window.addEventListener('load', handleComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', () => setLoading(true));
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleComplete);
+      window.removeEventListener('load', handleComplete);
+    };
   }, []);
 
   return (
@@ -41,16 +71,24 @@ const LayoutView = ({ children }) => {
         <div>
           <Layout>
             <HeaderComponent />
-            <Content
-              style={{
-                paddingTop: '60px',
-                minHeight: '100vh',
-                background: themeState === 'dark' ? '#0F1113' : '#EEEEEE',
-              }}
-            >
-              <div className="container">{children}</div>
-            </Content>
-            <FooterComponent />
+            {loading ? (
+              <div className="center">
+                <Spin indicator={LoadingIcon} />
+              </div>
+            ) : (
+              <>
+                <Content
+                  style={{
+                    paddingTop: '60px',
+                    minHeight: '100vh',
+                    background: themeState === 'dark' ? '#0F1113' : '#EEEEEE',
+                  }}
+                >
+                  <div className="container">{children}</div>
+                </Content>
+                <FooterComponent />
+              </>
+            )}
           </Layout>
         </div>
       </ConfigProvider>

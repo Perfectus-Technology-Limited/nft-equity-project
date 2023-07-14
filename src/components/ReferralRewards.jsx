@@ -1,15 +1,22 @@
-import { Card, Typography, Space, Input, Button, Tooltip, Alert } from 'antd';
+import { Card, Typography, Space, Input, Button, Tooltip, Alert, Spin } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { CopyFilled, CheckOutlined } from '@ant-design/icons';
 import { useAccount } from 'wagmi';
 import dynamic from 'next/dynamic';
 import { Row, Col } from 'reactstrap';
+import axios from 'axios';
 
-const ReferralLink = () => {
+const ReferralRewards = () => {
   const { Title, Text } = Typography;
   const [isRefLinkCopied, setIsRefLinkCopied] = useState(false);
   const [refLink, setRefLink] = useState(null);
   const { address } = useAccount();
+
+  const [totalRewardsAmount, setTotalRewardsAmount] = useState(0);
+  const [totalRewardsAmountLoading, setTotalRewardsAmountLoading] = useState(false);
+  const [referralCount, setReferralCount] = useState(0);
+  const [referralCountLoading, setReferralCountLoading] = useState(false);
+
 
   const handleCopy = () => {
     setIsRefLinkCopied(true);
@@ -31,21 +38,90 @@ const ReferralLink = () => {
     }
   }, [address]);
 
+  useEffect(() => {
+    if(address) {
+      fetchReferralRewards()
+      fetchReferralCount()
+    }
+  }, [address])
+
+  const fetchReferralRewards = async () => {
+    try {
+      setTotalRewardsAmountLoading(true);
+      let config = {
+        method: 'get',
+        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/referal-income-details/get-total-reward/${address}`,
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+        },
+      };
+      const response = await axios(config);
+      if (response.status === 200) {
+        const payload = response.data.payload;
+        if (payload) {
+          setTotalRewardsAmount(payload.totalRewardAmount)
+          setTotalRewardsAmountLoading(false);
+        }
+      }
+    } catch (error) {
+      setTotalRewardsAmountLoading(false);
+      console.log(error);
+    }
+  }
+
+  const fetchReferralCount = async () => {
+    try {
+      setReferralCountLoading(true);
+      let config = {
+        method: 'get',
+        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/referal-income-details/get-referal-count/${address}`,
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+        },
+      };
+      const response = await axios(config);
+      if (response.status === 200) {
+        const payload = response.data.payload;
+        if (payload) {
+          setReferralCount(payload.count);
+        } else {
+          setReferralCount(0);
+        }
+        setReferralCountLoading(false);
+      }
+    } catch (error) {
+      setReferralCountLoading(false);
+      console.log(error)
+    }
+  }
+
   return (
     <Card className="nft-square-card nft-dark-card">
       <div className="text-center">
         <Title level={5}>
           <span className="text-primary">REFERRAL</span>
-          <span>{` `}LINK</span>
+          <span>{` `}REWARDS</span>
         </Title>
 
         <div className="mt-3">
           <Text type="secondary" className="text-uppercase">
-            Receive a 10% share when SOMEONE utilize your referral link.
-          </Text>
+            RECEIVE A 0.5% SHARE FOR 1-5 DIRECT REFERRALS
+          </Text><br />
+          <Text type="secondary" className="text-uppercase">
+          0.75% SHARE FOR 5-10 DIRECT REFERRALS
+          </Text><br />
+          <Text type="secondary" className="text-uppercase">
+          1% SHARE FOR 10+ DIRECT REFERRALS
+          </Text><br />
+          <Text type="secondary" className="text-uppercase">
+          RECEIVE A 0.35% SHARE FOR YOUR LEVEL 2 REFERRALS
+          </Text><br />
+          <Text type="secondary" className="text-uppercase">
+          RECEIVE A 0.25% SHARE FOR YOUR LEVEL 3 REFERRALS
+          </Text><br />
         </div>
 
-        <div className="col-lg-10 mx-auto mt-2">
+        <div className="mt-2">
           {address ? (
             <Row>
               <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12">
@@ -87,10 +163,10 @@ const ReferralLink = () => {
               >
                 <Card hoverable>
                   <Title level={5} className="m-0">
-                    2
+                    {totalRewardsAmountLoading ? <Spin size="small" /> : <Text>{parseFloat(totalRewardsAmount.toFixed(2))} BUSD</Text>}
                   </Title>
                   <Text type="secondary">
-                    People signed up through your link
+                    Your total rewards from referrals
                   </Text>
                 </Card>
               </Col>
@@ -105,10 +181,10 @@ const ReferralLink = () => {
                 className="mt-3"
               >
                 <Card hoverable>
-                  <Text type="secondary">Your Level: 3</Text>
                   <Title level={5} className="m-0">
-                    0.25%
+                    { referralCountLoading ? <Spin size='small' /> : referralCount }
                   </Title>
+                  <Text type="secondary">Your referrals</Text>
                 </Card>
               </Col>
             </Row>
@@ -129,4 +205,4 @@ const ReferralLink = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(ReferralLink), { ssr: false });
+export default dynamic(() => Promise.resolve(ReferralRewards), { ssr: false });

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Button, Avatar } from 'antd';
 import { SHA256 } from 'crypto-js';
 import Identicon from 'identicon.js';
 
 const WalletConnectWidget = () => {
+  const [windowSize, setWindowSize] = useState('');
+
   const generateAvatar = (seed) => {
     const options = {
       size: 80, // Adjust the size of the identicon image
@@ -13,6 +15,25 @@ const WalletConnectWidget = () => {
     const data = new Identicon(hash.slice(0, 15), options).toString();
     return 'data:image/png;base64,' + data;
   };
+
+  useEffect(() => {
+    // make sure your function is being called in client side only
+    if (typeof window !== 'undefined') {
+      setWindowSize(window.innerWidth);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  });
 
   return (
     <ConnectButton.Custom>
@@ -101,7 +122,7 @@ const WalletConnectWidget = () => {
                         )}
                       </div>
                     )}
-                    {chain.name}
+                    {windowSize > 1400 ? chain.name : ''}
                   </Button>
 
                   <Button onClick={openAccountModal} type="primary">

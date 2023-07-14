@@ -103,3 +103,196 @@ body {
   background: #d9d9d9;
   border: none !important;
 }
+
+/* .standard-nft-card::after {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #2dc2b1
+  );
+  animation: animate 5s linear infinite;
+  animation-delay: -2s;
+  z-index: 0;
+}
+
+.standard-nft-card::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #2dc2b1
+  );
+  animation: animate 5s linear infinite;
+  z-index: 0;
+}
+
+.bronze-nft-card::after {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #cd7f32
+  );
+  animation: animate 5s linear infinite;
+  animation-delay: -2s;
+  z-index: 0;
+}
+
+.bronze-nft-card::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #cd7f32
+  );
+  animation: animate 5s linear infinite;
+  z-index: 0;
+}
+
+.silver-nft-card::after {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #c0c0c0
+  );
+  animation: animate 5s linear infinite;
+  animation-delay: -2s;
+  z-index: 0;
+}
+
+.silver-nft-card::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #c0c0c0
+  );
+  animation: animate 5s linear infinite;
+  z-index: 0;
+}
+
+.gold-nft-card::after {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #ffd700
+  );
+  animation: animate 5s linear infinite;
+  animation-delay: -2s;
+  z-index: 0;
+}
+
+.gold-nft-card::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 780px;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #ffd700
+  );
+  animation: animate 5s linear infinite;
+  z-index: 0;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+} */
+
+.ant-table-thead > tr >th{
+  background: #303E4E !important;
+}
+
+.table-row-light {
+  background: #d9d9d9 !important;
+}
+
+.ant-drawer-body {
+  background-color: #303E4E !important;
+  color: #fff !important;
+}
+
+.standard-nft-card::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(#2dc2b1 45deg, transparent 45deg);
+  animation: rotate 5s linear infinite;
+  z-index: 0;
+}
+
+.bronze-nft-card::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(#cd7f32 45deg, transparent 45deg);
+  animation: rotate 5s linear infinite;
+  z-index: 0;
+}
+
+.silver-nft-card::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(#c0c0c0 45deg, transparent 45deg);
+  animation: rotate 5s linear infinite;
+  z-index: 0;
+}
+
+.gold-nft-card::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(#ffd700 45deg, transparent 45deg);
+  animation: rotate 5s linear infinite;
+  z-index: 0;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
