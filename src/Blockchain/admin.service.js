@@ -38,20 +38,14 @@ export const changeFeePercentages = async (signer, devFee, expencesFee) => {
     );
     const contractInstanceWithSigner = contractInstance.connect(signer);
 
-    const devFeeFormatted = utils.parseUnits(
-      devFee.toString(),
-      1
-    )
+    const devFeeFormatted = utils.parseUnits(devFee.toString(), 1);
 
-    const expencesFeeFormatted = utils.parseUnits(
-      expencesFee.toString(),
-      1
-    )
+    const expencesFeeFormatted = utils.parseUnits(expencesFee.toString(), 1);
 
-    const receipt =  await contractInstanceWithSigner.changeFeePercentages(
+    const receipt = await contractInstanceWithSigner.changeFeePercentages(
       devFeeFormatted,
       expencesFeeFormatted
-    )
+    );
 
     const result = await receipt.wait();
     return result;
@@ -66,7 +60,7 @@ export const changeFeePercentages = async (signer, devFee, expencesFee) => {
     }
     throw errorMessage;
   }
-}
+};
 
 export const whitelistUsers = async (signer, address, status) => {
   try {
@@ -81,10 +75,10 @@ export const whitelistUsers = async (signer, address, status) => {
       provider
     );
     const contractInstanceWithSigner = contractInstance.connect(signer);
-    const receipt =  await contractInstanceWithSigner.whitelistUsers(
+    const receipt = await contractInstanceWithSigner.whitelistUsers(
       address,
       status
-    )
+    );
     const result = await receipt.wait();
     return result;
   } catch (error) {
@@ -98,7 +92,7 @@ export const whitelistUsers = async (signer, address, status) => {
     }
     throw errorMessage;
   }
-}
+};
 
 export const withdrawBusd = async (signer, amount) => {
   try {
@@ -113,13 +107,10 @@ export const withdrawBusd = async (signer, amount) => {
       provider
     );
     const contractInstanceWithSigner = contractInstance.connect(signer);
-    const busdAmountFormatted = utils.parseUnits(
-      amount.toString(),
-      18
-    )
-    const receipt =  await contractInstanceWithSigner.withdrawBusd(
+    const busdAmountFormatted = utils.parseUnits(amount.toString(), 18);
+    const receipt = await contractInstanceWithSigner.withdrawBusd(
       busdAmountFormatted
-    )
+    );
     const result = await receipt.wait();
     return result;
   } catch (error) {
@@ -133,4 +124,55 @@ export const withdrawBusd = async (signer, amount) => {
     }
     throw errorMessage;
   }
-}
+};
+
+export const changeTierDetails = async (
+  signer,
+  tierId,
+  price,
+  equityShare,
+  revenueShare,
+  daoWeight,
+  uri
+) => {
+  try {
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
+    const contractAddress = configs.nftContractAddress;
+    const contractABI = JSON.parse(configs.nftContractABI);
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const contractInstanceWithSigner = contractInstance.connect(signer);
+    
+    const priceFormatted = utils.parseUnits(price.toString(), 18);
+    const equityShareFormatted = utils.parseUnits(equityShare.toString(), 2);
+    const revenueShareFormatted = utils.parseUnits(revenueShare.toString(), 2);
+    const daoWeightFormatted = utils.parseUnits(daoWeight.toString(), 2);
+
+    const receipt = await contractInstanceWithSigner.changeTierDetails(
+      tierId,
+      priceFormatted,
+      equityShareFormatted,
+      revenueShareFormatted,
+      daoWeightFormatted,
+      uri
+    );
+    
+    const result = await receipt.wait();
+    return result;
+  } catch (error) {
+    let errorMessage =
+      'Something went wrong while trying to write. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+};

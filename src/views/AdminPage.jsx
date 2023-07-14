@@ -13,6 +13,7 @@ import {
 import ChangeFeePercentages from '@/components/admin/ChangeFeePercentages';
 import WhitelistUsers from '@/components/admin/WhitelistUsers';
 import WithdrawBusd from '@/components/admin/WithdrawBusd';
+import ChangeTierDetails from '@/components/admin/ChangeTierDetails';
 import { ethers } from 'ethers';
 import { useAccount, useSigner } from 'wagmi';
 import { configs } from '@/Blockchain/web3.config';
@@ -221,6 +222,10 @@ const AdminPage = () => {
 
         <Col span={24}>
           <WithdrawBusd />
+        </Col>
+
+        <Col span={24}>
+          <ChangeTierDetails />
         </Col>
       </Row>
     </div>
