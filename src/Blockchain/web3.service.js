@@ -191,6 +191,34 @@ export const isWalletWhitelisted = async (address) => {
   }
 };
 
+export const getPropertyPrice = async () => {
+  try {
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NEXT_PUBLIC_BSC_RPC_PROVIDER
+    );
+    const contractAddress = configs.nftContractAddress;
+    const contractABI = JSON.parse(configs.nftContractABI);
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const propertyPriceResponse = await contractInstance.propertyPrice();
+    const propertyPriceFormatted = utils.formatUnits(propertyPriceResponse.toString(), 18);
+    return propertyPriceFormatted;
+  } catch (error) {
+    let errorMessage =
+      'Something went wrong while trying to fetch property price. Please try again';
+    if (error && error.message) {
+      errorMessage = error.message;
+    }
+    if (error && error.reason && error.reason !== '') {
+      errorMessage = error.reason;
+    }
+    throw errorMessage;
+  }
+}
+
 export const mintNft = async (tierId, referralAddress, signer) => {
   try {
     const provider = new ethers.providers.JsonRpcProvider(
