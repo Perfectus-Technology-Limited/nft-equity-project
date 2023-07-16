@@ -51,12 +51,16 @@ const HeaderComponent = () => {
   // check is admin
   useEffect(() => {
     let admins = adminAccounts ? adminAccounts.split(',') : null;
-    if (account && admins?.length > 0) {
-      const result = admins.find(
-        (item) => item.toLowerCase() === account.toLowerCase()
-      );
-      if (result) {
-        setIsAdmin(true);
+    if (account) {
+      if(admins?.length > 0) {
+        const result = admins.find(
+          (item) => item.toLowerCase() === account.toLowerCase()
+        );
+        if (result) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
       } else {
         setIsAdmin(false);
       }
@@ -110,7 +114,7 @@ const HeaderComponent = () => {
         setMyNftClass('text-secondary');
       }
     }
-  }, [router?.pathname, account]);
+  }, [router?.pathname, account, isAdmin]);
 
   const toggleTheme = () => {
     if (themeState === 'dark') {
@@ -182,7 +186,7 @@ const HeaderComponent = () => {
                 </Title>
               </a>
 
-              {isAdmin && (
+              {isAdmin ? (
                 <Title
                   level={5}
                   className={`m-0 mx-2 ${adminClass}`}
@@ -193,7 +197,7 @@ const HeaderComponent = () => {
                 >
                   ADMIN
                 </Title>
-              )}
+              ) : ''}
             </div>
           </div>
         )}

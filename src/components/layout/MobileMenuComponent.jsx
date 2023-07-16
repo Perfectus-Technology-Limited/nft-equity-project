@@ -30,12 +30,16 @@ const MobileMenuComponent = () => {
   // check is admin
   useEffect(() => {
     let admins = adminAccounts ? adminAccounts.split(',') : null;
-    if (account && admins?.length > 0) {
-      const result = admins.find(
-        (item) => item.toLowerCase() === account.toLowerCase()
-      );
-      if (result) {
-        setIsAdmin(true);
+    if (account) {
+      if (admins?.length > 0) {
+        const result = admins.find(
+          (item) => item.toLowerCase() === account.toLowerCase()
+        );
+        if (result) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
       } else {
         setIsAdmin(false);
       }
@@ -85,7 +89,7 @@ const MobileMenuComponent = () => {
         setMyNftClass('text-secondary');
       }
     }
-  }, [router?.pathname, account]);
+  }, [router?.pathname, account, isAdmin]);
 
   const toggleTheme = () => {
     if (themeState === 'dark') {
@@ -100,7 +104,7 @@ const MobileMenuComponent = () => {
   const handleRoute = (route) => {
     router.push(route);
     dispatch(closeMenu());
-  }
+  };
 
   return (
     <Drawer
@@ -178,7 +182,7 @@ const MobileMenuComponent = () => {
           MY NFTS
         </Title>
 
-        {isAdmin && (
+        {isAdmin ? (
           <Title
             level={5}
             className={`m-0 mx-2 ${adminClass} mt-4`}
@@ -187,6 +191,8 @@ const MobileMenuComponent = () => {
           >
             ADMIN
           </Title>
+        ) : (
+          ''
         )}
       </div>
 
