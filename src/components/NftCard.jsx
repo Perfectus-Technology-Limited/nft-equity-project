@@ -21,7 +21,7 @@ const nftProperties = {
 };
 
 const NftCard = ({ tierData }) => {
-  const { address } = useAccount();
+  const { address: account } = useAccount();
   const { data: signer } = useSigner();
   const { Title, Text } = Typography;
   const [count, setCount] = useState(1);
@@ -67,15 +67,15 @@ const NftCard = ({ tierData }) => {
   }, [tierData]);
 
   useEffect(() => {
-    if (address) {
+    if (account) {
       getAllowance();
     }
-  }, [address]);
+  }, [account]);
 
   const getAllowance = async () => {
     try {
       setIsAllowanceLoading(true);
-      const result = await fetchAllowance(address);
+      const result = await fetchAllowance(account);
       const allowance = result.toString();
       const allowanceFormattedString = utils.formatUnits(allowance, 18);
       const allowanceFormattedNumber = Number(allowanceFormattedString);
@@ -103,10 +103,10 @@ const NftCard = ({ tierData }) => {
   }, [isPublic, isWhitelisted, isApproved]);
 
   useEffect(() => {
-    if (address) {
+    if (account) {
       isWhitelistedAccount();
     }
-  }, [address]);
+  }, [account]);
 
   useEffect(() => {
     if (allowance >= count * nftData.price) {
@@ -119,7 +119,7 @@ const NftCard = ({ tierData }) => {
   const isWhitelistedAccount = async () => {
     try {
       setIsWhitelistedLoading(true);
-      const result = await isWalletWhitelisted(address);
+      const result = await isWalletWhitelisted(account);
       setIsWhitelisted(result);
       setIsWhitelistedLoading(false);
     } catch (error) {
@@ -296,10 +296,10 @@ const NftCard = ({ tierData }) => {
   const handleMint = async () => {
     try {
       setIsMinting(true);
-      let referralAddress = '0x0000000000000000000000000000000000000000';
+      let referralaccount = '0x0000000000000000000000000000000000000000';
       if (ref) {
-        referralAddress = ref.toString();
-        if (ref.toString().toLowerCase() === address.toString().toLowerCase()) {
+        referralaccount = ref.toString();
+        if (ref.toString().toLowerCase() === account.toString().toLowerCase()) {
           setIsMinting(false);
           return notification['error']({
             key: 'nft_mint',
@@ -311,7 +311,7 @@ const NftCard = ({ tierData }) => {
 
       const mintResult = await mintNft(
         tierData.tierId,
-        referralAddress,
+        referralaccount,
         signer
       );
 
