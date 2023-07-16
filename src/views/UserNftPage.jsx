@@ -40,7 +40,7 @@ const UserNftPage = () => {
       case 'gold':
         return (
           <video
-            src="/Gold.webm"
+            src="/Gold.mp4"
             alt="nft-img"
             className={`${type}-nft-bg w-100 mt-3 mb-3`}
             autoPlay
@@ -52,7 +52,7 @@ const UserNftPage = () => {
       case 'silver':
         return (
           <video
-            src="/Silver.webm"
+            src="/Silver.mp4"
             alt="nft-img"
             className={`${type}-nft-bg w-100 mt-3 mb-3`}
             autoPlay
@@ -64,7 +64,7 @@ const UserNftPage = () => {
       case 'bronze':
         return (
           <video
-            src="/Bronze.webm"
+            src="/Bronze.mp4"
             alt="nft-img"
             className={`${type}-nft-bg w-100 mt-3 mb-3`}
             autoPlay
@@ -76,7 +76,7 @@ const UserNftPage = () => {
       case 'standard':
         return (
           <video
-            src="/Standard.webm"
+            src="/Standard.mp4"
             alt="nft-img"
             className={`${type}-nft-bg w-100 mt-3 mb-3`}
             autoPlay

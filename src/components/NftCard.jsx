@@ -203,7 +203,7 @@ const NftCard = ({ tierData }) => {
       case 0:
         return (
           <video
-            src="/Gold.webm"
+            src="/Gold.mp4"
             alt="nft-img"
             className={`${tierData?.type}-nft-bg col-lg-11 col-9 mt-3 mb-3`}
             autoPlay
@@ -215,7 +215,7 @@ const NftCard = ({ tierData }) => {
       case 1:
         return (
           <video
-            src="/Silver.webm"
+            src="/Silver.mp4"
             alt="nft-img"
             className={`${tierData?.type}-nft-bg col-lg-11 col-9 mt-3 mb-3`}
             autoPlay
@@ -227,7 +227,7 @@ const NftCard = ({ tierData }) => {
       case 2:
         return (
           <video
-            src="/Bronze.webm"
+            src="/Bronze.mp4"
             alt="nft-img"
             className={`${tierData?.type}-nft-bg col-lg-11 col-9 mt-3 mb-3`}
             autoPlay
@@ -239,7 +239,7 @@ const NftCard = ({ tierData }) => {
       case 3:
         return (
           <video
-            src="/Standard.webm"
+            src="/Standard.mp4"
             alt="nft-img"
             className={`${tierData?.type}-nft-bg col-lg-11 col-9 mt-3 mb-3`}
             autoPlay
