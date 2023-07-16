@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const ReferralsTable = () => {
   const { Title, Text } = Typography;
-  const { address } = useAccount();
+  const { address:account } = useAccount();
   const [referralData, setReferralData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,17 +14,17 @@ const ReferralsTable = () => {
   const [totalReferralData, setTotalReferralData] = useState(0);
 
   useEffect(() => {
-    if (address) {
+    if (account) {
       fetchReferralData();
     }
-  }, [address, currentPage, pageLimit]);
+  }, [account, currentPage, pageLimit]);
 
   const fetchReferralData = async () => {
     try {
       setLoading(true);
       let config = {
         method: 'get',
-        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/referal-income-details/get-by-user/${address}?page=${currentPage}&limit=${pageLimit}`,
+        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/referal-income-details/get-by-user/${account}?page=${currentPage}&limit=${pageLimit}`,
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
         },
@@ -49,7 +49,7 @@ const ReferralsTable = () => {
 
   const columns = [
     {
-      title: <div className="text-center text-light">Wallet Address</div>,
+      title: <div className="text-center text-light">Wallet account</div>,
       dataIndex: 'fromAddress',
       key: 'id',
       render: (text) => (
@@ -108,7 +108,7 @@ const ReferralsTable = () => {
         </Title>
 
         <div className="mt-3">
-          {address ? (
+          {account ? (
             <>
               <Table
                 dataSource={referralData}

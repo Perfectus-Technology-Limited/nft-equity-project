@@ -30,12 +30,16 @@ const MobileMenuComponent = () => {
   // check is admin
   useEffect(() => {
     let admins = adminAccounts ? adminAccounts.split(',') : null;
-    if (account && admins?.length > 0) {
-      const result = admins.find(
-        (item) => item.toLowerCase() === account.toLowerCase()
-      );
-      if (result) {
-        setIsAdmin(true);
+    if (account) {
+      if (admins?.length > 0) {
+        const result = admins.find(
+          (item) => item.toLowerCase() === account.toLowerCase()
+        );
+        if (result) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
       } else {
         setIsAdmin(false);
       }
@@ -49,27 +53,43 @@ const MobileMenuComponent = () => {
       setNftMintClass('text-primary');
       setReferralSystemClass('text-light');
       setAdminClass('text-light');
-      setMyNftClass('text-light');
+      if (account) {
+        setMyNftClass('text-light');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
     if (router?.pathname === '/referral-system') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-primary');
       setAdminClass('text-light');
-      setMyNftClass('text-light');
+      if (account) {
+        setMyNftClass('text-light');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
     if (router?.pathname === '/admin') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-light');
       setAdminClass('text-primary');
-      setMyNftClass('text-light');
+      if (account) {
+        setMyNftClass('text-light');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
     if (router?.pathname === '/user-nfts') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-light');
       setAdminClass('text-light');
-      setMyNftClass('text-primary');
+      if (account) {
+        setMyNftClass('text-primary');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
-  }, [router?.pathname]);
+  }, [router?.pathname, account, isAdmin]);
 
   const toggleTheme = () => {
     if (themeState === 'dark') {
@@ -79,6 +99,11 @@ const MobileMenuComponent = () => {
       localStorage.setItem('nft_equity_theme', 'dark');
       dispatch(setTheme('dark'));
     }
+  };
+
+  const handleRoute = (route) => {
+    router.push(route);
+    dispatch(closeMenu());
   };
 
   return (
@@ -91,13 +116,15 @@ const MobileMenuComponent = () => {
     >
       <div className="d-flex justify-content-between">
         <div>
-          <Image
-            src="/Logo.svg"
-            width={120}
-            height={52}
-            alt="logo"
-            style={{ marginTop: '-10px' }}
-          />
+          <a href="https://nftequity.group" target="_blank" rel="noreferrer">
+            <Image
+              src="/Logo.svg"
+              width={120}
+              height={52}
+              alt="logo"
+              style={{ marginTop: '-10px' }}
+            />
+          </a>
         </div>
 
         <div>
@@ -116,7 +143,7 @@ const MobileMenuComponent = () => {
           level={5}
           className={`m-0 mx-2 ${nftMintClass} mt-4`}
           style={{ cursor: 'pointer' }}
-          onClick={() => router.push('/')}
+          onClick={() => handleRoute('/')}
         >
           NFT MINT
         </Title>
@@ -125,31 +152,47 @@ const MobileMenuComponent = () => {
           level={5}
           className={`m-0 mx-2 ${referralSystemClass} mt-4`}
           style={{ cursor: 'pointer' }}
-          onClick={() => router.push('/referral-system')}
+          onClick={() => handleRoute('/referral-system')}
         >
           PARTNER PROGRAM
         </Title>
 
-        {account && (
+        <a
+          href="https://nftequity.group/NFT-Equity-Group-WP.pdf"
+          target="_blank"
+          rel="noreferrer"
+          style={{ textDecoration: 'none' }}
+        >
           <Title
             level={5}
-            className={`m-0 mx-2 ${myNftClass} mt-4`}
+            className={`m-0 mx-2 mt-4`}
             style={{ cursor: 'pointer' }}
-            onClick={() => router.push('/user-nfts')}
+            onClick={() => dispatch(closeMenu())}
           >
-            MY NFTS
+            WHITE PAPER
           </Title>
-        )}
+        </a>
 
-        {isAdmin && (
+        <Title
+          level={5}
+          className={`m-0 mx-2 ${myNftClass} mt-4`}
+          style={{ cursor: 'pointer' }}
+          onClick={() => handleRoute('/user-nfts')}
+        >
+          MY NFTS
+        </Title>
+
+        {isAdmin ? (
           <Title
             level={5}
             className={`m-0 mx-2 ${adminClass} mt-4`}
             style={{ cursor: 'pointer' }}
-            onClick={() => router.push('/admin')}
+            onClick={() => handleRoute('/admin')}
           >
             ADMIN
           </Title>
+        ) : (
+          ''
         )}
       </div>
 

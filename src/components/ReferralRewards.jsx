@@ -10,7 +10,7 @@ const ReferralRewards = () => {
   const { Title, Text } = Typography;
   const [isRefLinkCopied, setIsRefLinkCopied] = useState(false);
   const [refLink, setRefLink] = useState(null);
-  const { address } = useAccount();
+  const { address:account } = useAccount();
 
   const [totalRewardsAmount, setTotalRewardsAmount] = useState(0);
   const [totalRewardsAmountLoading, setTotalRewardsAmountLoading] = useState(false);
@@ -31,26 +31,26 @@ const ReferralRewards = () => {
       typeof window !== 'undefined' && window.location.origin
         ? window.location.origin
         : '';
-    if (address) {
-      setRefLink(origin + '/?ref=' + address);
+    if (account) {
+      setRefLink(origin + '/?ref=' + account);
     } else {
       setRefLink(null);
     }
-  }, [address]);
+  }, [account]);
 
   useEffect(() => {
-    if(address) {
+    if(account) {
       fetchReferralRewards()
       fetchReferralCount()
     }
-  }, [address])
+  }, [account])
 
   const fetchReferralRewards = async () => {
     try {
       setTotalRewardsAmountLoading(true);
       let config = {
         method: 'get',
-        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/referal-income-details/get-total-reward/${address}`,
+        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/referal-income-details/get-total-reward/${account}`,
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
         },
@@ -74,7 +74,7 @@ const ReferralRewards = () => {
       setReferralCountLoading(true);
       let config = {
         method: 'get',
-        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/referal-income-details/get-referal-count/${address}`,
+        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/referal-income-details/get-referal-count/${account}`,
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
         },
@@ -122,7 +122,7 @@ const ReferralRewards = () => {
         </div>
 
         <div className="mt-2">
-          {address ? (
+          {account ? (
             <Row>
               <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12">
                 <Space.Compact
