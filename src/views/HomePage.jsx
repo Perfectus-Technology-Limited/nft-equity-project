@@ -73,13 +73,13 @@ const HomePage = () => {
           </Row>
         </motion.div>
 
-        <motion.div variants={item}>
+        {/* <motion.div variants={item}>
           <Row className="mt-5">
             <Col>
               <ReferralRewards />
             </Col>
           </Row>
-        </motion.div>
+        </motion.div> */}
       </motion.div>
     </div>
   );

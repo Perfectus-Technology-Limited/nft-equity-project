@@ -9,7 +9,7 @@ const ReferralLink = () => {
   const { Title, Text } = Typography;
   const [isRefLinkCopied, setIsRefLinkCopied] = useState(false);
   const [refLink, setRefLink] = useState(null);
-  const { address } = useAccount();
+  const { address: account } = useAccount();
 
   const handleCopy = () => {
     setIsRefLinkCopied(true);
@@ -24,12 +24,12 @@ const ReferralLink = () => {
       typeof window !== 'undefined' && window.location.origin
         ? window.location.origin
         : '';
-    if (address) {
-      setRefLink(origin + '/?ref=' + address);
+    if (account) {
+      setRefLink(origin + '/?ref=' + account);
     } else {
       setRefLink(null);
     }
-  }, [address]);
+  }, [account]);
 
   return (
     <Card className="nft-square-card nft-dark-card">
@@ -46,7 +46,7 @@ const ReferralLink = () => {
         </div>
 
         <div className="col-lg-10 mx-auto mt-2">
-          {address ? (
+          {account ? (
             <Row>
               <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12">
                 <Space.Compact
