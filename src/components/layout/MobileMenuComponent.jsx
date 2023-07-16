@@ -97,6 +97,11 @@ const MobileMenuComponent = () => {
     }
   };
 
+  const handleRoute = (route) => {
+    router.push(route);
+    dispatch(closeMenu());
+  }
+
   return (
     <Drawer
       placement="left"
@@ -134,7 +139,7 @@ const MobileMenuComponent = () => {
           level={5}
           className={`m-0 mx-2 ${nftMintClass} mt-4`}
           style={{ cursor: 'pointer' }}
-          onClick={() => router.push('/')}
+          onClick={() => handleRoute('/')}
         >
           NFT MINT
         </Title>
@@ -143,7 +148,7 @@ const MobileMenuComponent = () => {
           level={5}
           className={`m-0 mx-2 ${referralSystemClass} mt-4`}
           style={{ cursor: 'pointer' }}
-          onClick={() => router.push('/referral-system')}
+          onClick={() => handleRoute('/referral-system')}
         >
           PARTNER PROGRAM
         </Title>
@@ -158,6 +163,7 @@ const MobileMenuComponent = () => {
             level={5}
             className={`m-0 mx-2 mt-4`}
             style={{ cursor: 'pointer' }}
+            onClick={() => dispatch(closeMenu())}
           >
             WHITE PAPER
           </Title>
@@ -167,7 +173,7 @@ const MobileMenuComponent = () => {
           level={5}
           className={`m-0 mx-2 ${myNftClass} mt-4`}
           style={{ cursor: 'pointer' }}
-          onClick={() => router.push('/user-nfts')}
+          onClick={() => handleRoute('/user-nfts')}
         >
           MY NFTS
         </Title>
@@ -177,7 +183,7 @@ const MobileMenuComponent = () => {
             level={5}
             className={`m-0 mx-2 ${adminClass} mt-4`}
             style={{ cursor: 'pointer' }}
-            onClick={() => router.push('/admin')}
+            onClick={() => handleRoute('/admin')}
           >
             ADMIN
           </Title>
