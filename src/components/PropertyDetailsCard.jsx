@@ -136,6 +136,14 @@ const PropertyDetailsCard = () => {
               </Text>
             </div>
 
+            <div className='mt-2'>
+              <a href="https://nftequity.group/batu-bolong-villa.php" target="_blank" rel="noreferrer">
+              <Text className="fst-italic text-decoration-underline" style={{cursor: 'pointer'}}>
+                Full Property Details Page
+              </Text>
+              </a>
+            </div>
+
             <Row>
               <Col xxl="6" xl="6" lg="6" md="6" sm="6" xs="6" className="mt-4">
                 <Text className="fw-lighter">Price</Text>

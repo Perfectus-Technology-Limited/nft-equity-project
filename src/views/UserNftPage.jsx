@@ -101,7 +101,7 @@ const UserNftPage = () => {
       default:
         return '6%';
     }
-  }
+  };
 
   return (
     <div className="mt-5 mb-5">
@@ -111,9 +111,20 @@ const UserNftPage = () => {
         </Title>
       </div>
 
-      {userNfts.length === 0 && !isUserNftsLoading && (
+      {userNfts.length === 0 && !isUserNftsLoading && account && (
         <Alert
           message="You don't have NFTs for this wallet!"
+          type="info"
+          style={{
+            background: 'rgba(1, 180, 126, 0.4)',
+            border: '1px solid #01b47e',
+          }}
+        />
+      )}
+
+      {userNfts.length === 0 && !isUserNftsLoading && !account && (
+        <Alert
+          message="Please connect your wallet to see your NFTs!"
           type="info"
           style={{
             background: 'rgba(1, 180, 126, 0.4)',
@@ -156,22 +167,22 @@ const UserNftPage = () => {
                 /> */}
                 {getNFT(nft?.type)}
 
-                <hr className='mt-1' />
+                <hr className="mt-1" />
                 <div className="d-flex justify-content-between">
                   <Text type="secondary">NFT ID</Text>
                   <Text>{nft.nftId}</Text>
                 </div>
-                <hr className='mt-1' />
+                <hr className="mt-1" />
                 <div className="d-flex justify-content-between">
                   <Text type="secondary">Price</Text>
                   <Text>{nft.price} BUSD</Text>
                 </div>
-                <hr className='mt-1' />
+                <hr className="mt-1" />
                 <div className="d-flex justify-content-between">
                   <Text type="secondary">Shared revenue</Text>
                   <Text>{nft.sharedRevenue} %</Text>
                 </div>
-                <hr className='mt-1' />
+                <hr className="mt-1" />
                 {/* <div className="d-flex justify-content-between">
                   <Text type="secondary">APR</Text>
                   <Text>Up to {nft.apr} % / NFT</Text>
@@ -180,7 +191,7 @@ const UserNftPage = () => {
                   <Text type="secondary">APR</Text>
                   <Text>Up to {getAPR(nft?.type)} / NFT</Text>
                 </div>
-                <hr className='mt-1' />
+                <hr className="mt-1" />
                 <div className="d-flex justify-content-between">
                   <Text type="secondary">Equity share</Text>
                   <Text>{nft.equityShare} % / NFT</Text>

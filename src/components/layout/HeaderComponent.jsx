@@ -70,27 +70,47 @@ const HeaderComponent = () => {
       setNftMintClass('text-primary');
       setReferralSystemClass('text-light');
       setAdminClass('text-light');
-      setMyNftClass('text-light');
+      if (account) {
+        setMyNftClass('text-light');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
     if (router?.pathname === '/referral-system') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-primary');
       setAdminClass('text-light');
-      setMyNftClass('text-light');
+      if (account) {
+        setMyNftClass('text-light');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
     if (router?.pathname === '/admin') {
-      setNftMintClass('text-light');
-      setReferralSystemClass('text-light');
-      setAdminClass('text-primary');
-      setMyNftClass('text-light');
+      if (isAdmin) {
+        setNftMintClass('text-light');
+        setReferralSystemClass('text-light');
+        setAdminClass('text-primary');
+        if (account) {
+          setMyNftClass('text-light');
+        } else {
+          setMyNftClass('text-secondary');
+        }
+      } else {
+        router.push('/');
+      }
     }
     if (router?.pathname === '/user-nfts') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-light');
       setAdminClass('text-light');
-      setMyNftClass('text-primary');
+      if (account) {
+        setMyNftClass('text-primary');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
-  }, [router?.pathname]);
+  }, [router?.pathname, account]);
 
   const toggleTheme = () => {
     if (themeState === 'dark') {
@@ -105,15 +125,17 @@ const HeaderComponent = () => {
   return (
     <Header className="fixed-top nft-header" style={{ zIndex: 100 }}>
       <div className="d-flex justify-content-between container">
-        <div>
-          {windowSize >= 1000 ? (
-            <Image src="/Logo.svg" width={193} height={52} alt="logo" />
-          ) : (
-            <div style={{ marginLeft: '-50px' }}>
-              <Image src="/Logo.svg" width={120} height={52} alt="logo" />
-            </div>
-          )}
-        </div>
+        <a href="https://nftequity.group" target="_blank" rel="noreferrer">
+          <div>
+            {windowSize >= 1000 ? (
+              <Image src="/Logo.svg" width={193} height={52} alt="logo" />
+            ) : (
+              <div style={{ marginLeft: '-50px' }}>
+                <Image src="/Logo.svg" width={120} height={52} alt="logo" />
+              </div>
+            )}
+          </div>
+        </a>
 
         {windowSize >= 1000 && (
           <div className="center">
@@ -136,23 +158,38 @@ const HeaderComponent = () => {
                 PARTNER PROGRAM
               </Title>
 
-              {account && (
+              <Title
+                level={5}
+                className={`m-0 mx-2 ${myNftClass}`}
+                style={{ cursor: 'pointer' }}
+                onClick={() => router.push('/user-nfts')}
+              >
+                MY NFTS
+              </Title>
+
+              <a
+                href="https://nftequity.group/NFT-Equity-Group-WP.pdf"
+                target="_blank"
+                rel="noreferrer"
+                style={{ textDecoration: 'none' }}
+              >
                 <Title
                   level={5}
-                  className={`m-0 mx-2 ${myNftClass}`}
+                  className={`m-0 mx-2`}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => router.push('/user-nfts')}
                 >
-                  MY NFTS
+                  WHITE PAPER
                 </Title>
-              )}
+              </a>
 
               {isAdmin && (
                 <Title
                   level={5}
                   className={`m-0 mx-2 ${adminClass}`}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => router.push('/admin')}
+                  onClick={() =>
+                    isAdmin ? router.push('/admin') : router.push('/')
+                  }
                 >
                   ADMIN
                 </Title>

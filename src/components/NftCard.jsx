@@ -350,7 +350,8 @@ const NftCard = ({ tierData }) => {
   }
 
   return (
-    <div className={`${tierData?.type}-nft-card`}>
+    // <div className={`${tierData?.type}-nft-card`}>
+    <div className="nft-card">
       <div className="main-div p-3" style={{ margin: '2px' }}>
         <Title level={5}>
           <span className={`${tierData?.type}-text text-uppercase`}>
@@ -379,7 +380,7 @@ const NftCard = ({ tierData }) => {
           </Title>
         </div>
 
-        <div className="mt-4 count-container">
+        {/* <div className="mt-4 count-container">
           <div className="d-flex justify-content-between">
             <Button className="count-button" onClick={handleDecrease} disabled>
               -
@@ -389,7 +390,7 @@ const NftCard = ({ tierData }) => {
               +
             </Button>
           </div>
-        </div>
+        </div> */}
 
         <hr className='mt-1' />
         <div className="d-flex justify-content-between">

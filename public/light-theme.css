@@ -296,3 +296,16 @@ body {
     transform: rotate(360deg);
   }
 }
+
+
+.nft-card {
+  position: relative;
+  background: #fff;
+  border: none !important;
+  border-radius: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+}

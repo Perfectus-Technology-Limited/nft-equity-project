@@ -49,27 +49,43 @@ const MobileMenuComponent = () => {
       setNftMintClass('text-primary');
       setReferralSystemClass('text-light');
       setAdminClass('text-light');
-      setMyNftClass('text-light');
+      if (account) {
+        setMyNftClass('text-light');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
     if (router?.pathname === '/referral-system') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-primary');
       setAdminClass('text-light');
-      setMyNftClass('text-light');
+      if (account) {
+        setMyNftClass('text-light');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
     if (router?.pathname === '/admin') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-light');
       setAdminClass('text-primary');
-      setMyNftClass('text-light');
+      if (account) {
+        setMyNftClass('text-light');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
     if (router?.pathname === '/user-nfts') {
       setNftMintClass('text-light');
       setReferralSystemClass('text-light');
       setAdminClass('text-light');
-      setMyNftClass('text-primary');
+      if (account) {
+        setMyNftClass('text-primary');
+      } else {
+        setMyNftClass('text-secondary');
+      }
     }
-  }, [router?.pathname]);
+  }, [router?.pathname, account]);
 
   const toggleTheme = () => {
     if (themeState === 'dark') {
@@ -91,13 +107,15 @@ const MobileMenuComponent = () => {
     >
       <div className="d-flex justify-content-between">
         <div>
-          <Image
-            src="/Logo.svg"
-            width={120}
-            height={52}
-            alt="logo"
-            style={{ marginTop: '-10px' }}
-          />
+          <a href="https://nftequity.group" target="_blank" rel="noreferrer">
+            <Image
+              src="/Logo.svg"
+              width={120}
+              height={52}
+              alt="logo"
+              style={{ marginTop: '-10px' }}
+            />
+          </a>
         </div>
 
         <div>
@@ -130,16 +148,29 @@ const MobileMenuComponent = () => {
           PARTNER PROGRAM
         </Title>
 
-        {account && (
+        <a
+          href="https://nftequity.group/NFT-Equity-Group-WP.pdf"
+          target="_blank"
+          rel="noreferrer"
+          style={{ textDecoration: 'none' }}
+        >
           <Title
             level={5}
-            className={`m-0 mx-2 ${myNftClass} mt-4`}
+            className={`m-0 mx-2 mt-4`}
             style={{ cursor: 'pointer' }}
-            onClick={() => router.push('/user-nfts')}
           >
-            MY NFTS
+            WHITE PAPER
           </Title>
-        )}
+        </a>
+
+        <Title
+          level={5}
+          className={`m-0 mx-2 ${myNftClass} mt-4`}
+          style={{ cursor: 'pointer' }}
+          onClick={() => router.push('/user-nfts')}
+        >
+          MY NFTS
+        </Title>
 
         {isAdmin && (
           <Title
