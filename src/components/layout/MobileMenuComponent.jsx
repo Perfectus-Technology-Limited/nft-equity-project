@@ -165,7 +165,7 @@ const MobileMenuComponent = () => {
         >
           <Title
             level={5}
-            className={`m-0 mx-2 mt-4`}
+            className={`m-0 mx-2 mt-4 text-light`}
             style={{ cursor: 'pointer' }}
             onClick={() => dispatch(closeMenu())}
           >
