@@ -179,7 +179,7 @@ const HeaderComponent = () => {
               >
                 <Title
                   level={5}
-                  className={`m-0 mx-2`}
+                  className={`m-0 mx-2 text-light`}
                   style={{ cursor: 'pointer' }}
                 >
                   WHITE PAPER
