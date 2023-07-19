@@ -19,7 +19,7 @@ import { publicProvider } from 'wagmi/providers/public';
 
 export default function App({ Component, pageProps }) {
   const { chains, provider } = configureChains(
-    [bscTestnet],
+    [bsc],
     [publicProvider()]
   );
 
