@@ -120,6 +120,13 @@ const NftCard = ({ tierData }) => {
     try {
       setIsWhitelistedLoading(true);
       const result = await isWalletWhitelisted(account);
+      if (result === false) {
+        notification['warning']({
+        key: 'wallet_whitelist',
+        message: 'Sorry',
+        description: 'Your wallet is not whitelisted!',
+      });
+      }
       setIsWhitelisted(result);
       setIsWhitelistedLoading(false);
     } catch (error) {
