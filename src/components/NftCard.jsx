@@ -119,13 +119,14 @@ const NftCard = ({ tierData }) => {
   const isWhitelistedAccount = async () => {
     try {
       setIsWhitelistedLoading(true);
+      const isPublicResult = await isNftPublic();
       const result = await isWalletWhitelisted(account);
-      if (result === false) {
+      if (result === false && isPublicResult === false) {
         notification['warning']({
-        key: 'wallet_whitelist',
-        message: 'Sorry',
-        description: 'Your wallet is not whitelisted!',
-      });
+          key: 'wallet_whitelist',
+          message: 'Sorry',
+          description: 'Your wallet is not whitelisted!',
+        });
       }
       setIsWhitelisted(result);
       setIsWhitelistedLoading(false);
@@ -354,7 +355,7 @@ const NftCard = ({ tierData }) => {
       default:
         return '6%';
     }
-  }
+  };
 
   return (
     // <div className={`${tierData?.type}-nft-card`}>
@@ -399,7 +400,7 @@ const NftCard = ({ tierData }) => {
           </div>
         </div> */}
 
-        <hr className='mt-1' />
+        <hr className="mt-1" />
         <div className="d-flex justify-content-between">
           <Text type="secondary">Price</Text>
           <Text>
@@ -407,7 +408,7 @@ const NftCard = ({ tierData }) => {
           </Text>
         </div>
 
-        <hr className='mt-1' />
+        <hr className="mt-1" />
         <div className="d-flex justify-content-between">
           <Text type="secondary">Shared revenue</Text>
           <Text>
@@ -415,7 +416,7 @@ const NftCard = ({ tierData }) => {
           </Text>
         </div>
 
-        <hr className='mt-1' />
+        <hr className="mt-1" />
         {/* <div className="d-flex justify-content-between">
           <Text type="secondary">APR</Text>
           <Text>
@@ -427,12 +428,13 @@ const NftCard = ({ tierData }) => {
         <div className="d-flex justify-content-between">
           <Text type="secondary">APR</Text>
           <Text>
-            Up to {isNftDataLoading ? <Spin size="small" /> : getAPR(tierData?.type)} /
-            NFT
+            Up to{' '}
+            {isNftDataLoading ? <Spin size="small" /> : getAPR(tierData?.type)}{' '}
+            / NFT
           </Text>
         </div>
 
-        <hr className='mt-1' />
+        <hr className="mt-1" />
         <div className="d-flex justify-content-between">
           <Text type="secondary">Equity share</Text>
           <Text>
@@ -441,7 +443,7 @@ const NftCard = ({ tierData }) => {
           </Text>
         </div>
 
-        <hr className='mt-1' />
+        <hr className="mt-1" />
         <div className="d-flex justify-content-between">
           <Text type="secondary">Total</Text>
           <Text>
@@ -450,10 +452,12 @@ const NftCard = ({ tierData }) => {
           </Text>
         </div>
 
-        <hr className='mt-1' />
+        <hr className="mt-1" />
         <div className="d-flex justify-content-around">
           <Button
-            className={`${tierData?.type}-nft-btn ${approveButtonDisabled ? 'text-secondary': 'text-dark'} text-uppercase`}
+            className={`${tierData?.type}-nft-btn ${
+              approveButtonDisabled ? 'text-secondary' : 'text-dark'
+            } text-uppercase`}
             loading={
               isPublicLoading ||
               isWhitelistedLoading ||
@@ -466,7 +470,9 @@ const NftCard = ({ tierData }) => {
             Approve BUSD
           </Button>
           <Button
-            className={`${tierData?.type}-nft-btn ${mintButtonDisabled ? 'text-secondary' : 'text-dark'} text-secondary text-uppercase`}
+            className={`${tierData?.type}-nft-btn ${
+              mintButtonDisabled ? 'text-secondary' : 'text-dark'
+            } text-secondary text-uppercase`}
             loading={isMinting}
             disabled={mintButtonDisabled}
             onClick={() => handleMint()}
