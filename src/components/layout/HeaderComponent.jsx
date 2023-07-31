@@ -10,8 +10,10 @@ import { useRouter } from 'next/router';
 import { useAccount } from 'wagmi';
 import { MenuOutlined } from '@ant-design/icons';
 import MobileMenuComponent from './MobileMenuComponent';
+import { useThemeSwitcher } from 'react-css-theme-switcher';
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ globalLoading, setGlobalLoading }) => {
+  const { status } = useThemeSwitcher();
   const [windowSize, setWindowSize] = useState('');
   const { Header } = Layout;
   const router = useRouter();
@@ -28,6 +30,14 @@ const HeaderComponent = () => {
   const [referralSystemClass, setReferralSystemClass] = useState('');
   const [adminClass, setAdminClass] = useState('');
   const [myNftClass, setMyNftClass] = useState('');
+
+  useEffect(() => {
+    if (status !== 'loaded') {
+      setGlobalLoading(true);
+    } else {
+      setGlobalLoading(false);
+    }
+  }, [status]);
 
   useEffect(() => {
     // make sure your function is being called in client side only
@@ -52,7 +62,7 @@ const HeaderComponent = () => {
   useEffect(() => {
     let admins = adminAccounts ? adminAccounts.split(',') : null;
     if (account) {
-      if(admins?.length > 0) {
+      if (admins?.length > 0) {
         const result = admins.find(
           (item) => item.toLowerCase() === account.toLowerCase()
         );
@@ -127,116 +137,124 @@ const HeaderComponent = () => {
   };
 
   return (
-    <Header className="fixed-top nft-header" style={{ zIndex: 100 }}>
-      <div className="d-flex justify-content-between container">
-        <a href="https://nftequity.group" target="_blank" rel="noreferrer">
-          <div>
+    <>
+      {globalLoading ? (
+        <div></div>
+      ) : (
+        <Header className="fixed-top nft-header" style={{ zIndex: 100 }}>
+          <div className="d-flex justify-content-between container">
+            <a href="https://nftequity.group" target="_blank" rel="noreferrer">
+              <div>
+                {windowSize >= 1000 ? (
+                  <Image src="/Logo.svg" width={193} height={52} alt="logo" />
+                ) : (
+                  <div style={{ marginLeft: '-50px' }}>
+                    <Image src="/Logo.svg" width={120} height={52} alt="logo" />
+                  </div>
+                )}
+              </div>
+            </a>
+
+            {windowSize >= 1000 && (
+              <div className="center">
+                <div className="d-flex">
+                  <Title
+                    level={5}
+                    className={`m-0 mx-2 ${nftMintClass}`}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => router.push('/')}
+                  >
+                    NFT MINT
+                  </Title>
+
+                  <Title
+                    level={5}
+                    className={`m-0 mx-2 ${referralSystemClass}`}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => router.push('/referral-system')}
+                  >
+                    PARTNER PROGRAM
+                  </Title>
+
+                  <Title
+                    level={5}
+                    className={`m-0 mx-2 ${myNftClass}`}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => router.push('/user-nfts')}
+                  >
+                    MY NFTS
+                  </Title>
+
+                  <a
+                    href="https://nftequity.group/NFT-Equity-Group-WP.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <Title
+                      level={5}
+                      className={`m-0 mx-2 text-light`}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      WHITE PAPER
+                    </Title>
+                  </a>
+
+                  {isAdmin ? (
+                    <Title
+                      level={5}
+                      className={`m-0 mx-2 ${adminClass}`}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() =>
+                        isAdmin ? router.push('/admin') : router.push('/')
+                      }
+                    >
+                      ADMIN
+                    </Title>
+                  ) : (
+                    ''
+                  )}
+                </div>
+              </div>
+            )}
+
             {windowSize >= 1000 ? (
-              <Image src="/Logo.svg" width={193} height={52} alt="logo" />
+              <div className="d-flex">
+                <div style={{ marginRight: '10px' }}>
+                  <WalletConnectWidget />
+                </div>
+
+                <div style={{ marginTop: '-3px' }}>
+                  {themeState === 'light' && (
+                    <Sun
+                      size={20}
+                      color="white"
+                      style={{ cursor: 'pointer' }}
+                      onClick={toggleTheme}
+                    />
+                  )}
+
+                  {themeState === 'dark' && (
+                    <Moon
+                      size={20}
+                      color="white"
+                      style={{ cursor: 'pointer' }}
+                      onClick={toggleTheme}
+                    />
+                  )}
+                </div>
+              </div>
             ) : (
-              <div style={{ marginLeft: '-50px' }}>
-                <Image src="/Logo.svg" width={120} height={52} alt="logo" />
+              <div style={{ marginRight: '-50px' }} className="text-light">
+                <MenuOutlined onClick={() => dispatch(openMenu())} />
               </div>
             )}
           </div>
-        </a>
 
-        {windowSize >= 1000 && (
-          <div className="center">
-            <div className="d-flex">
-              <Title
-                level={5}
-                className={`m-0 mx-2 ${nftMintClass}`}
-                style={{ cursor: 'pointer' }}
-                onClick={() => router.push('/')}
-              >
-                NFT MINT
-              </Title>
-
-              <Title
-                level={5}
-                className={`m-0 mx-2 ${referralSystemClass}`}
-                style={{ cursor: 'pointer' }}
-                onClick={() => router.push('/referral-system')}
-              >
-                PARTNER PROGRAM
-              </Title>
-
-              <Title
-                level={5}
-                className={`m-0 mx-2 ${myNftClass}`}
-                style={{ cursor: 'pointer' }}
-                onClick={() => router.push('/user-nfts')}
-              >
-                MY NFTS
-              </Title>
-
-              <a
-                href="https://nftequity.group/NFT-Equity-Group-WP.pdf"
-                target="_blank"
-                rel="noreferrer"
-                style={{ textDecoration: 'none' }}
-              >
-                <Title
-                  level={5}
-                  className={`m-0 mx-2 text-light`}
-                  style={{ cursor: 'pointer' }}
-                >
-                  WHITE PAPER
-                </Title>
-              </a>
-
-              {isAdmin ? (
-                <Title
-                  level={5}
-                  className={`m-0 mx-2 ${adminClass}`}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() =>
-                    isAdmin ? router.push('/admin') : router.push('/')
-                  }
-                >
-                  ADMIN
-                </Title>
-              ) : ''}
-            </div>
-          </div>
-        )}
-
-        {windowSize >= 1000 ? (
-          <div className="d-flex">
-            <div style={{ marginRight: '10px' }}>
-              <WalletConnectWidget />
-            </div>
-
-            <div style={{ marginTop: '-3px' }}>
-              {themeState === 'light' && (
-                <Sun
-                  size={20}
-                  color="white"
-                  style={{ cursor: 'pointer' }}
-                  onClick={toggleTheme}
-                />
-              )}
-
-              {themeState === 'dark' && (
-                <Moon
-                  size={20}
-                  color="white"
-                  style={{ cursor: 'pointer' }}
-                  onClick={toggleTheme}
-                />
-              )}
-            </div>
-          </div>
-        ) : (
-          <div style={{ marginRight: '-50px' }} className="text-light">
-            <MenuOutlined onClick={() => dispatch(openMenu())} />
-          </div>
-        )}
-      </div>
-
-      <MobileMenuComponent />
-    </Header>
+          <MobileMenuComponent />
+        </Header>
+      )}
+    </>
   );
 };
 
