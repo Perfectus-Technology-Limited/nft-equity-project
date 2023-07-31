@@ -15,6 +15,7 @@ const LayoutView = ({ children }) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [globalLoading, setGlobalLoading] = useState(true);
   const router = useRouter();
 
   // light/dark themes related styles files
@@ -56,7 +57,7 @@ const LayoutView = ({ children }) => {
   }, []);
 
   return (
-    <ThemeSwitcherProvider themeMap={themes} defaultTheme={themeState}>
+    <ThemeSwitcherProvider themeMap={themes} defaultTheme="dark">
       <ConfigProvider
         theme={{
           algorithm:
@@ -70,8 +71,8 @@ const LayoutView = ({ children }) => {
       >
         <div>
           <Layout>
-            <HeaderComponent />
-            {loading ? (
+            <HeaderComponent globalLoading={globalLoading} setGlobalLoading={setGlobalLoading} />
+            {loading || globalLoading ? (
               <div className="center">
                 <Spin indicator={LoadingIcon} />
               </div>
