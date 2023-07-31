@@ -57,7 +57,7 @@ const LayoutView = ({ children }) => {
   }, []);
 
   return (
-    <ThemeSwitcherProvider themeMap={themes} defaultTheme="dark">
+    <ThemeSwitcherProvider themeMap={themes} defaultTheme={themeState}>
       <ConfigProvider
         theme={{
           algorithm:
