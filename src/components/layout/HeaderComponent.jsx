@@ -146,10 +146,10 @@ const HeaderComponent = ({ globalLoading, setGlobalLoading }) => {
             <a href="https://nftequity.group" target="_blank" rel="noreferrer">
               <div>
                 {windowSize >= 1000 ? (
-                  <Image src="/Logo.svg" width={193} height={52} alt="logo" />
+                  <Image src="/Logo.png" width={193} height={52} alt="logo" className="nav-logo" />
                 ) : (
                   <div style={{ marginLeft: '-50px' }}>
-                    <Image src="/Logo.svg" width={120} height={52} alt="logo" />
+                    <Image src="/Logo.png" width={120} height={35} alt="logo" />
                   </div>
                 )}
               </div>
