@@ -118,9 +118,9 @@ const MobileMenuComponent = () => {
         <div>
           <a href="https://nftequity.group" target="_blank" rel="noreferrer">
             <Image
-              src="/Logo.svg"
+              src="/Logo.png"
               width={120}
-              height={52}
+              height={35}
               alt="logo"
               style={{ marginTop: '-10px' }}
             />
@@ -134,7 +134,7 @@ const MobileMenuComponent = () => {
         </div>
       </div>
 
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center mt-5">
         <WalletConnectWidget />
       </div>
 
